@@ -36,6 +36,23 @@ async function main() {
       console.log('✅ Catégorie de service créée');
     }
 
+    // Créer une boutique par défaut pour les produits de services
+    let defaultShop = await prisma.shop.findFirst({
+      where: { id: 'default-shop' }
+    });
+
+    if (!defaultShop) {
+      defaultShop = await prisma.shop.create({
+        data: {
+          id: 'default-shop',
+          name: 'Services de Réservation',
+          description: 'Boutique virtuelle pour les services de réservation',
+          ownerId: testUser.id
+        }
+      });
+      console.log('✅ Boutique par défaut créée');
+    }
+
     // Créer les détails du service s'ils n'existent pas
     let serviceDetails = await prisma.serviceDetails.findFirst({
       where: { userId: testUser.id }
@@ -164,8 +181,21 @@ async function main() {
             serviceId: service.id
           }))
         });
+
+        // Créer un produit correspondant pour les créneaux de réservation
+        await prisma.product.upsert({
+          where: { id: service.id },
+          update: {},
+          create: {
+            id: service.id,
+            title: serviceData.name,
+            description: serviceData.description,
+            price: serviceData.prixHoraire,
+            shopId: 'default-shop'
+          }
+        });
       }
-      console.log('✅ Services créés avec leurs durées');
+      console.log('✅ Services créés avec leurs durées et produits correspondants');
     }
 
     // Créer des commentaires de test

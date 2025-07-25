@@ -1,0 +1,423 @@
+// Variables de thème
+$primary-color: #3b82f6;
+$primary-hover: #2563eb;
+$success-color: #10b981;
+$success-hover: #059669;
+$danger-color: #ef4444;
+$danger-hover: #dc2626;
+$gray-50: #f9fafb;
+$gray-100: #f3f4f6;
+$gray-200: #e5e7eb;
+$gray-300: #d1d5db;
+$gray-400: #9ca3af;
+$gray-500: #6b7280;
+$gray-600: #4b5563;
+$gray-700: #374151;
+$gray-800: #1f2937;
+$gray-900: #111827;
+
+// Polices
+$font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$font-secondary: 'Poppins', sans-serif;
+
+// Composant BookingCalendar
+.booking-calendar {
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: $font-primary;
+
+  &__container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 2rem;
+    background: linear-gradient(135deg, $primary-color, $primary-hover);
+    color: white;
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    font-family: $font-secondary;
+    margin: 0;
+  }
+
+  &__nav-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.05);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    background: $gray-200;
+    padding: 1px;
+  }
+
+  &__day-header {
+    background: $gray-50;
+    padding: 1rem 0.5rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: $gray-700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__day {
+    background: white;
+    min-height: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0.5rem;
+
+    &:hover {
+      background: $gray-50;
+    }
+
+    &--other-month {
+      background: $gray-50;
+      color: $gray-400;
+      cursor: default;
+
+      &:hover {
+        background: $gray-50;
+      }
+    }
+
+    &--available {
+      cursor: pointer;
+      
+      &:hover {
+        background: rgba($success-color, 0.1);
+        transform: scale(1.02);
+      }
+    }
+
+    &--selected {
+      background: rgba($primary-color, 0.1);
+      color: $primary-color;
+      font-weight: 600;
+    }
+  }
+
+  &__day-number {
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  &__availability-indicator {
+    width: 6px;
+    height: 6px;
+    background: $success-color;
+    border-radius: 50%;
+    margin-top: 2px;
+    animation: pulse 2s infinite;
+  }
+
+  &__slots {
+    padding: 2rem;
+    border-top: 1px solid $gray-200;
+  }
+
+  &__slots-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: $gray-800;
+    margin: 0 0 1.5rem 0;
+    font-family: $font-secondary;
+  }
+
+  &__slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  &__slot-container {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+  }
+
+  &__slot {
+    background: white;
+    border: 2px solid $gray-200;
+    border-radius: 8px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    flex: 1;
+    margin-right: 0;
+
+    &:hover {
+      border-color: $primary-color;
+      box-shadow: 0 4px 12px rgba($primary-color, 0.15);
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  &__slot-time {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: $gray-800;
+    margin-bottom: 0.5rem;
+  }
+
+  &__slot-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__slot-service {
+    font-size: 0.875rem;
+    color: $gray-600;
+  }
+
+  &__slot-price {
+    font-size: 1rem;
+    font-weight: 600;
+    color: $success-color;
+  }
+
+  &__slot-delete {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 24px;
+    height: 24px;
+    background: #ef4444;
+    color: white;
+    border: 2px solid white;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+
+    &:hover {
+      background: #dc2626;
+      transform: scale(1.1);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+
+  &__no-slots {
+    text-align: center;
+    color: $gray-500;
+    font-style: italic;
+    padding: 2rem;
+  }
+}
+
+// Modal de réservation
+.booking-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+  }
+
+  &__content {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 400px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    animation: modalSlideIn 0.3s ease-out;
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $gray-800;
+    margin: 0 0 1.5rem 0;
+    font-family: $font-secondary;
+  }
+
+  &__details {
+    margin-bottom: 2rem;
+
+    p {
+      margin: 0.5rem 0;
+      color: $gray-700;
+
+      strong {
+        color: $gray-800;
+      }
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+  }
+
+  &__btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    font-size: 0.875rem;
+
+    &--cancel {
+      background: $gray-100;
+      color: $gray-700;
+
+      &:hover {
+        background: $gray-200;
+      }
+    }
+
+    &--confirm {
+      background: $success-color;
+      color: white;
+
+      &:hover {
+        background: $success-hover;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba($success-color, 0.3);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .booking-calendar {
+    &__header {
+      padding: 1rem;
+    }
+
+    &__title {
+      font-size: 1.25rem;
+    }
+
+    &__nav-btn {
+      width: 36px;
+      height: 36px;
+      font-size: 1rem;
+    }
+
+    &__day {
+      min-height: 50px;
+      padding: 0.25rem;
+    }
+
+    &__slots {
+      padding: 1rem;
+    }
+
+    &__slots-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .booking-modal {
+    &__content {
+      margin: 1rem;
+      padding: 1.5rem;
+    }
+
+    &__actions {
+      flex-direction: column;
+    }
+
+    &__btn {
+      width: 100%;
+    }
+  }
+}

@@ -244,29 +244,31 @@ export default function Services() {
           <div className="services-page__services-grid">
             {services.length > 0 ? (
               services.map((service) => (
-                <Link key={service.id} href="/services/booking">
-                  <div className="services-page__services-card">
-                    {service.imageUrl && (
-                      <Image
-                        src={service.imageUrl}
-                        alt={service.name}
-                        width={300}
-                        height={200}
-                        className="services-page__services-card-image"
-                      />
-                    )}
-                    <h3 className="services-page__services-card-title">{service.name}</h3>
-                    <p className="services-page__services-card-type">{service.type}</p>
-                    <p className="services-page__services-card-description">{service.description}</p>
-                    <div className="services-page__services-card-pricing">
-                      {service.durations?.map((duration) => (
-                        <span key={duration.id} className="services-page__services-card-pricing-item">
-                          {formatPrice(service.prixHoraire, duration.minutes)}
-                        </span>
-                      ))}
-                    </div>
+                <div key={service.id} className="services-page__services-card">
+                  {service.imageUrl && (
+                    <Image
+                      src={service.imageUrl}
+                      alt={service.name}
+                      width={300}
+                      height={200}
+                      className="services-page__services-card-image"
+                    />
+                  )}
+                  <h3 className="services-page__services-card-title">{service.name}</h3>
+                  <p className="services-page__services-card-type">{service.type}</p>
+                  <p className="services-page__services-card-description">{service.description}</p>
+                  <div className="services-page__services-card-pricing">
+                    {service.durations?.map((duration) => (
+                      <Link 
+                        key={duration.id} 
+                        href={`/services/booking?serviceId=${service.id}&duration=${duration.minutes}`}
+                        className="services-page__services-card-pricing-item"
+                      >
+                        {formatPrice(service.prixHoraire, duration.minutes)}
+                      </Link>
+                    ))}
                   </div>
-                </Link>
+                </div>
               ))
             ) : (
               <div className="services-page__services-card">

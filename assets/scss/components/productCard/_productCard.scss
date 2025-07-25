@@ -1,0 +1,85 @@
+/************************************************************/
+/**************************PLACEHOLDER**************************/
+/************************************************************/
+%productCard {
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: box-shadow 0.2s;
+
+  &:hover {
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+
+  &__image {
+    height: 12rem;
+    background-color: #f7fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__content {
+    padding: 1rem;
+  }
+
+  &__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  &__price {
+    font-weight: 700;
+    color: #2d3748;
+  }
+  //bgee
+  //bgm
+}
+
+/************************************************************/
+/**************************MIXIN**************************/
+/************************************************************/
+@mixin productCard(
+  $paramMixi_: $productCard
+  , $shadowIntensity: map-get($productCard, shadowIntensity)
+  // BEMMixinParam
+){
+  $paramMixi: productCard(map-merge($productCard, $paramMixi_));
+}
+
+/************************************************************/
+/**************************FUNCTION**************************/
+/************************************************************/
+@function productCard(
+  $params: $productCard
+  , $shadowIntensity: map-get($productCard, shadowIntensity)
+  // BEMFunctionParam
+){
+  @return map-merge($productCard, (
+    shadowIntensity: $shadowIntensity
+  ));
+}
+
+/************************************************************/
+/**************************BLOC BEM**************************/
+/************************************************************/
+.productCard {
+  @extend %productCard;
+
+  // Modifiers
+  &--featured {
+    border-color: #4299e1;
+  }
+
+  // Elements
+  &__image {
+    @extend %productCard__image;
+  }
+
+  // States
+  &.is-loading {
+    opacity: 0.5;
+  }
+}

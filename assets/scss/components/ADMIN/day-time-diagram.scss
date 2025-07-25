@@ -1,0 +1,143 @@
+// Styles pour le diagramme temporel
+.day-time-diagram {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+
+  &__header {
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  &__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0;
+    text-transform: capitalize;
+  }
+
+  &__timeline {
+    display: grid;
+    grid-template-columns: repeat(24, 1fr);
+    gap: 2px;
+    margin-bottom: 1.5rem;
+    background: #f3f4f6;
+    padding: 4px;
+    border-radius: 8px;
+  }
+
+  &__hour-block {
+    position: relative;
+    height: 60px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      z-index: 10;
+    }
+  }
+
+  &__hour-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    margin-bottom: 2px;
+  }
+
+  &__slot-count {
+    background: rgba(255, 255, 255, 0.9);
+    color: #1f2937;
+    font-size: 0.625rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 10px;
+    min-width: 16px;
+    text-align: center;
+    line-height: 1;
+  }
+
+  &__legend {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  &__legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: #4b5563;
+  }
+
+  &__legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  // Responsive
+  @media (max-width: 768px) {
+    padding: 1rem;
+
+    &__timeline {
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1px;
+    }
+
+    &__hour-block {
+      height: 40px;
+    }
+
+    &__hour-label {
+      font-size: 0.625rem;
+    }
+
+    &__slot-count {
+      font-size: 0.5rem;
+      padding: 1px 4px;
+    }
+
+    &__legend {
+      gap: 1rem;
+    }
+
+    &__legend-item {
+      font-size: 0.75rem;
+    }
+
+    &__legend-color {
+      width: 12px;
+      height: 12px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    &__timeline {
+      grid-template-columns: repeat(8, 1fr);
+    }
+
+    &__hour-block {
+      height: 35px;
+    }
+
+    &__hour-label {
+      font-size: 0.5rem;
+    }
+  }
+}

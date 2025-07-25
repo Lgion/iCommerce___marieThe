@@ -6,10 +6,10 @@ export async function GET() {
     const slots = await prisma.serviceSlot.findMany({
       where: { isBooked: false },
       include: {
-        product: {
+        service: {
           select: {
-            title: true,
-            price: true
+            name: true,
+            prixHoraire: true
           }
         }
       },

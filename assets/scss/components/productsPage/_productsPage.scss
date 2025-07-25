@@ -1,0 +1,74 @@
+/************************************************************/
+/**************************PLACEHOLDER**************************/
+/************************************************************/
+%productsPage {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+
+  &__title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  //bgee
+  //bgm
+}
+
+/************************************************************/
+/**************************MIXIN**************************/
+/************************************************************/
+@mixin productsPage(
+  $paramMixi_: $productsPage
+  , $gridColumns: map-get($productsPage, gridColumns)
+  // BEMMixinParam
+){
+  $paramMixi: productsPage(map-merge($productsPage, $paramMixi_));
+}
+
+/************************************************************/
+/**************************FUNCTION**************************/
+/************************************************************/
+@function productsPage(
+  $params: $productsPage
+  , $gridColumns: map-get($productsPage, gridColumns)
+  // BEMFunctionParam
+){
+  @return map-merge($productsPage, (
+    gridColumns: $gridColumns
+  ));
+}
+
+/************************************************************/
+/**************************BLOC BEM**************************/
+/************************************************************/
+.productsPage {
+  @extend %productsPage;
+
+  // Modifiers
+  &--compact {
+    padding: 1rem;
+    
+    .productsPage__title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+  }
+
+  // Elements
+  &__grid {
+    @extend %productsPage__grid;
+  }
+
+  // States
+  &.is-loading {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+}

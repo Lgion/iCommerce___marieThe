@@ -14,12 +14,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum ProductType {
-  PHYSICAL
-  DIGITAL
-  SERVICE
-}
-
 enum OrderStatus {
   PENDING
   CONFIRMED
@@ -59,13 +53,11 @@ model Product {
   title       String
   description String
   price       Float
-  type        ProductType @default(PHYSICAL)
   variations  Variation[]
   orderItems  OrderItem[]
   digitalFile String?     // Pour produits numériques
   shop        Shop        @relation(fields: [shopId], references: [id])
   shopId      String
-  serviceSlots ServiceSlot[] // Relation inverse
 }
 
 model Variation {
@@ -88,10 +80,10 @@ model ServiceSlot {
   startTime  DateTime
   endTime    DateTime
   isBooked   Boolean  @default(false)
-  product    Product  @relation(fields: [productId], references: [id])
-  productId  String
+  service    Service  @relation(fields: [serviceId], references: [id])
+  serviceId  String
   orderItem  OrderItem? @relation(fields: [orderItemId], references: [id])
-  orderItemId String?   @unique
+  orderItemId String?
 }
 
 model Order {
@@ -107,7 +99,7 @@ model OrderItem {
   product     Product      @relation(fields: [productId], references: [id])
   productId   String
   variation   String?      // Option sélectionnée
-  serviceSlot ServiceSlot?
+  serviceSlots ServiceSlot[] // Relation one-to-many pour les réservations multi-slot
   quantity    Int
   price       Float
   order       Order        @relation(fields: [orderId], references: [id])
@@ -172,6 +164,7 @@ model Service {
   type        String          // Ex: nattes, tresses, frange pour coiffure
   prixHoraire Float           // Prix par heure
   durations   ServiceDuration[] // Durées possibles
+  slots       ServiceSlot[]   // Créneaux de réservation
   category    ServiceCategory @relation(fields: [categoryId], references: [id])
   categoryId  String
   provider    User            @relation(fields: [providerId], references: [id])

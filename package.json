@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:seed": "node prisma/seed.js"
+    "db:seed:services": "node prisma/seed-services.js",
+    "db:seed:ecommerce": "node prisma/seed-ecommerce.js",
+    "db:seed:slots": "node prisma/seed-slots.js",
+    "db:reset:services": "node prisma/reset-services.js"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.21.0",

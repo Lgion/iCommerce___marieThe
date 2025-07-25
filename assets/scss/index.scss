@@ -1,0 +1,21 @@
+// Configuration et utilitaires
+@import './config/variables';
+@import './config/mixins';
+
+// Base et reset
+@import './base/reset';
+@import './base/typography';
+
+// Composants
+@import 'components/productsPage/productsPage';
+@import 'components/productCard/productCard';
+
+// Layout
+@import './layout/header';
+@import './layout/footer';
+
+// Pages
+@import './pages/home';
+
+// Utilitaires
+@import './utilities/helpers';
