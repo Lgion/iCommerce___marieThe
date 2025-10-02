@@ -1,0 +1,352 @@
+@use "sass:color";
+@use "sass:map";
+@use "../../utils/variables" as *;
+
+/************************************************************/
+/**************************PLACEHOLDER**************************/
+/************************************************************/
+%_serviceFormModal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba($gray-900, 0.35);
+  backdrop-filter: blur(12px);
+  padding: $L;
+  z-index: 1100;
+
+  &__container {
+    position: relative;
+    width: min(700px, 100%);
+    border-radius: 1.5rem;
+    background: linear-gradient(160deg, rgba($white, 0.98) 0%, rgba($gray-50, 0.92) 100%);
+    box-shadow: $shadow-xl;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $L;
+    background: linear-gradient(135deg, rgba($primary-color, 0.12), rgba($primary-hover, 0.08));
+  }
+
+  &__title {
+    font-family: $titres;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $gray-900;
+    margin: 0;
+  }
+
+  &__close {
+    border: none;
+    border-radius: 999px;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: grid;
+    place-items: center;
+    background: rgba($white, 0.75);
+    color: $gray-700;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+
+    &:hover,
+    &:focus-visible {
+      background: rgba($primary-color, 0.15);
+      transform: rotate(90deg);
+      outline: none;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: $L;
+  }
+
+  &__body {
+    display: grid;
+    gap: $L;
+    padding: 0 $L;
+  }
+
+  &__fields {
+    display: grid;
+    gap: $S_;
+  }
+
+  &__label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: $gray-700;
+  }
+
+  &__input,
+  &__textarea,
+  &__select {
+    width: 100%;
+    border-radius: 1rem;
+    border: 1px solid rgba($gray-300, 0.8);
+    padding: 0.75rem 1rem;
+    background: rgba($white, 0.96);
+    font-family: $contenus;
+    font-size: 0.95rem;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+
+    &:focus-visible {
+      border-color: $primary-color;
+      box-shadow: 0 0 0 3px rgba($primary-color, 0.18);
+      outline: none;
+    }
+  }
+
+  &__textarea {
+    resize: vertical;
+    min-height: 110px;
+  }
+
+  &__alert {
+    margin: 0;
+    padding: 0.8rem 1.1rem;
+    border-radius: 1rem;
+    font-size: 0.9rem;
+    background: rgba($success-color, 0.1);
+    color: $success-hover;
+    border: 1px solid rgba($success-color, 0.15);
+
+    &--error {
+      background: rgba($danger-color, 0.1);
+      color: $danger-color;
+      border-color: rgba($danger-color, 0.2);
+    }
+  }
+
+  &__durations {
+    display: grid;
+    gap: $S;
+    padding: $S_;
+    border-radius: 1rem;
+    background: rgba($primary-color, 0.05);
+    border: 1px dashed rgba($primary-color, 0.25);
+  }
+
+  &__durationsHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__sectionTitle {
+    font-family: $titres;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: $primary-color;
+    margin: 0;
+  }
+
+  &__add {
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(135deg, $success-color 0%, $success-hover 100%);
+    color: $white;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.55rem 1.1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: $shadow-md;
+      outline: none;
+    }
+  }
+
+  &__durationList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: $S;
+  }
+
+  &__duration {
+    padding: $S;
+    border-radius: 1rem;
+    background: rgba($white, 0.92);
+    box-shadow: $shadow-sm;
+  }
+
+  &__durationFields {
+    display: flex;
+    align-items: center;
+    gap: $S;
+  }
+
+  &__input--duration {
+    max-width: 140px;
+  }
+
+  &__durationUnit {
+    font-size: 0.9rem;
+    color: $gray-600;
+  }
+
+  &__remove {
+    border: none;
+    border-radius: 999px;
+    width: 2rem;
+    height: 2rem;
+    display: grid;
+    place-items: center;
+    background: rgba($danger-color, 0.12);
+    color: $danger-color;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+
+    &:hover,
+    &:focus-visible {
+      background: $danger-color;
+      color: $white;
+      outline: none;
+    }
+  }
+
+  &__footer {
+    padding: 0 $L $L;
+    display: flex;
+    justify-content: flex-end;
+    gap: $S;
+  }
+
+  &__secondary,
+  &__primary {
+    border: none;
+    border-radius: 999px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  &__secondary {
+    background: rgba($gray-300, 0.4);
+    color: $gray-600;
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: $shadow-sm;
+      outline: none;
+    }
+  }
+
+  &__primary {
+    background: linear-gradient(135deg, $primary-color 0%, $primary-hover 100%);
+    color: $white;
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: $shadow-lg;
+      outline: none;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+  }
+}
+
+/************************************************************/
+/**************************MIXIN**************************/
+/************************************************************/
+@mixin serviceFormModal(
+  $paramMixi_: $serviceFormModal
+) {
+  $paramMixi: serviceFormModal(map.merge($serviceFormModal, $paramMixi_));
+
+  @extend %_serviceFormModal;
+  &__container {@extend %_serviceFormModal__container;}
+  &__header {@extend %_serviceFormModal__header;}
+  &__title {@extend %_serviceFormModal__title;}
+  &__close {@extend %_serviceFormModal__close;}
+  &__form {@extend %_serviceFormModal__form;}
+  &__body {@extend %_serviceFormModal__body;}
+  &__fields {@extend %_serviceFormModal__fields;}
+  &__label {@extend %_serviceFormModal__label;}
+  &__input {@extend %_serviceFormModal__input;}
+  &__textarea {@extend %_serviceFormModal__textarea;}
+  &__select {@extend %_serviceFormModal__select;}
+  &__alert {@extend %_serviceFormModal__alert;}
+  &__durations {@extend %_serviceFormModal__durations;}
+  &__durationsHeader {@extend %_serviceFormModal__durationsHeader;}
+  &__sectionTitle {@extend %_serviceFormModal__sectionTitle;}
+  &__add {@extend %_serviceFormModal__add;}
+  &__durationList {@extend %_serviceFormModal__durationList;}
+  &__duration {@extend %_serviceFormModal__duration;}
+  &__durationFields {@extend %_serviceFormModal__durationFields;}
+  &__input--duration {@extend %_serviceFormModal__input--duration;}
+  &__durationUnit {@extend %_serviceFormModal__durationUnit;}
+  &__remove {@extend %_serviceFormModal__remove;}
+  &__footer {@extend %_serviceFormModal__footer;}
+  &__secondary {@extend %_serviceFormModal__secondary;}
+  &__primary {@extend %_serviceFormModal__primary;}
+}
+
+/************************************************************/
+/**************************FUNCTION**************************/
+/************************************************************/
+@function serviceFormModal(
+  $defaultValues: $serviceFormModal
+) {
+  @return map.merge($serviceFormModal, (
+  ));
+}
+
+$serviceFormModal: ();
+
+/************************************************************/
+/**************************BLOC BEM**************************/
+/************************************************************/
+.serviceFormModal {
+  @include serviceFormModal;
+
+  &__container {@extend %_serviceFormModal__container;}
+  &__header {@extend %_serviceFormModal__header;}
+  &__title {@extend %_serviceFormModal__title;}
+  &__close {@extend %_serviceFormModal__close;}
+  &__form {@extend %_serviceFormModal__form;}
+  &__body {@extend %_serviceFormModal__body;}
+  &__fields {@extend %_serviceFormModal__fields;}
+  &__label {@extend %_serviceFormModal__label;}
+  &__input {@extend %_serviceFormModal__input;}
+  &__input--duration {@extend %_serviceFormModal__input--duration;}
+  &__textarea {@extend %_serviceFormModal__textarea;}
+  &__select {@extend %_serviceFormModal__select;}
+  &__alert {@extend %_serviceFormModal__alert;}
+  &__alert--error {@extend %_serviceFormModal__alert; background: rgba($danger-color, 0.1); color: $danger-color; border-color: rgba($danger-color, 0.2);}
+  &__durations {@extend %_serviceFormModal__durations;}
+  &__durationsHeader {@extend %_serviceFormModal__durationsHeader;}
+  &__sectionTitle {@extend %_serviceFormModal__sectionTitle;}
+  &__add {@extend %_serviceFormModal__add;}
+  &__durationList {@extend %_serviceFormModal__durationList;}
+  &__duration {@extend %_serviceFormModal__duration;}
+  &__durationFields {@extend %_serviceFormModal__durationFields;}
+  &__durationUnit {@extend %_serviceFormModal__durationUnit;}
+  &__remove {@extend %_serviceFormModal__remove;}
+  &__footer {@extend %_serviceFormModal__footer;}
+  &__secondary {@extend %_serviceFormModal__secondary;}
+  &__primary {@extend %_serviceFormModal__primary;}
+}

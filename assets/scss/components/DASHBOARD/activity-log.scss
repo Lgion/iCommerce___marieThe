@@ -1,0 +1,246 @@
+@import '../../utils/variables.scss';
+
+.activity-log {
+  background: $dashboardCardBg;
+  border-radius: $dashboardRadiusLg;
+  box-shadow: $shadow-sm;
+  border: 1px solid $dashboardBorderColor;
+  overflow: hidden;
+
+  &__header {
+    padding: $M;
+    border-bottom: 1px solid $dashboardBorderColor;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+    font-size: 18px;
+    font-weight: 600;
+    color: $dashboardTextPrimary;
+  }
+
+  &__filter {
+    font-size: 13px;
+    color: $primary-color;
+    cursor: pointer;
+    font-weight: 500;
+    transition: color 0.2s;
+
+    &:hover {
+      color: $primary-hover;
+    }
+  }
+
+  &__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 600px;
+    overflow-y: auto;
+  }
+
+  &__item {
+    padding: $M;
+    border-bottom: 1px solid $dashboardBorderColor;
+    display: flex;
+    gap: $S_;
+    transition: background 0.2s;
+
+    &:hover {
+      background: $gray-50;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+
+    &--login {
+      background: rgba($statBookingsColor, 0.1);
+      color: $statBookingsColor;
+    }
+
+    &--logout {
+      background: rgba($dashboardTextMuted, 0.1);
+      color: $dashboardTextSecondary;
+    }
+
+    &--create {
+      background: rgba($success-color, 0.1);
+      color: $success-color;
+    }
+
+    &--update {
+      background: rgba($statCustomersColor, 0.1);
+      color: $statCustomersColor;
+    }
+
+    &--delete {
+      background: rgba($danger-color, 0.1);
+      color: $danger-color;
+    }
+
+    &--view {
+      background: rgba($statProductsColor, 0.1);
+      color: $statProductsColor;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: $XS;
+  }
+
+  &__action {
+    font-size: 14px;
+    font-weight: 600;
+    color: $dashboardTextPrimary;
+    margin-bottom: 2px;
+  }
+
+  &__time {
+    font-size: 12px;
+    color: $dashboardTextMuted;
+    white-space: nowrap;
+  }
+
+  &__description {
+    font-size: 13px;
+    color: $dashboardTextSecondary;
+    line-height: 1.5;
+  }
+
+  &__details {
+    margin-top: $S;
+    padding: $S;
+    background: $gray-50;
+    border-radius: $dashboardRadiusSm;
+    font-size: 12px;
+    color: $dashboardTextSecondary;
+    font-family: monospace;
+  }
+
+  &__user {
+    display: inline-flex;
+    align-items: center;
+    gap: $XS;
+    font-weight: 600;
+    color: $primary-color;
+  }
+
+  &__entity {
+    display: inline-block;
+    padding: 2px 6px;
+    background: rgba($primary-color, 0.1);
+    color: $primary-color;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 12px;
+  }
+
+  &__footer {
+    padding: $M;
+    border-top: 1px solid $dashboardBorderColor;
+    text-align: center;
+  }
+
+  &__load-more {
+    color: $primary-color;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.2s;
+
+    &:hover {
+      color: $primary-hover;
+    }
+  }
+
+  &__empty {
+    padding: $XL;
+    text-align: center;
+    color: $dashboardTextMuted;
+
+    &-icon {
+      font-size: 48px;
+      margin-bottom: $M;
+      opacity: 0.5;
+    }
+
+    &-text {
+      font-size: 16px;
+    }
+  }
+
+  // Timeline variant
+  &--timeline {
+    .activity-log__item {
+      position: relative;
+      padding-left: $XL;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 20px;
+        top: 50px;
+        bottom: -$M;
+        width: 2px;
+        background: $dashboardBorderColor;
+      }
+
+      &:last-child::before {
+        display: none;
+      }
+    }
+
+    .activity-log__icon {
+      position: absolute;
+      left: 0;
+      top: $M;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .activity-log {
+    &__item {
+      flex-direction: column;
+      gap: $S;
+    }
+
+    &__icon {
+      width: 36px;
+      height: 36px;
+      font-size: 16px;
+    }
+
+    &__header-row {
+      flex-direction: column;
+      gap: $XS;
+    }
+
+    &__time {
+      align-self: flex-start;
+    }
+  }
+}

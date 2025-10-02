@@ -1,20 +1,42 @@
 import prisma from '@/lib/prisma';
-import ProductCard from '@/components/ProductCard';
+import ProductsDashboard from './ProductsDashboard';
 import '@/assets/scss/components/productsPage/_productsPage.scss';
 
 export default async function ProductsPage() {
-  const products = await prisma.product.findMany({
-    include: { variations: true }
-  });
+  const [products, shops] = await Promise.all([
+    prisma.product.findMany({
+      include: {
+        variations: {
+          include: {
+            options: true
+          }
+        },
+        shop: {
+          select: {
+            id: true,
+            name: true
+          }
+        }
+      },
+      orderBy: {
+        title: 'asc'
+      }
+    }),
+    prisma.shop.findMany({
+      select: {
+        id: true,
+        name: true
+      },
+      orderBy: {
+        name: 'asc'
+      }
+    })
+  ]);
 
   return (
-    <div className="productsPage">
-      <h1 className="productsPage__title">Nos Produits</h1>
-      <div className="productsPage__grid">
-        {products.map(product => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
-    </div>
+    <ProductsDashboard
+      initialProducts={products}
+      availableShops={shops}
+    />
   );
 }

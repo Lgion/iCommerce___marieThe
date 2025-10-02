@@ -1,29 +1,42 @@
 
-@import "./utils/variables";
-@import "./utils/functions";
-@import "./utils/mixins";
-@import "./utils/extensions";
+@use "./utils/variables";
+@use "./utils/functions";
+@use "./utils/mixins";
+@use "./utils/extensions";
 
-@import "./themes/template";
 
-@import "./base/base";
-@import "./base/normalize";
-@import "./base/typography";
-// @import "./vendors/";
+@use "./base/base";
+@use "./base/normalize";
+@use "./base/typography";
+// @use "./vendors/";
 
-@import "./components/buttons";
-@import "./components/lists";
-@import "./components/cards";
-@import "./components/POSTS/_post";
-@import 'components/ADMIN/admin-panel';
-@import 'components/ADMIN/day-time-diagram';
-@import "./components/BOOKING/booking-calendar";
 
-@import "./layouts/headers";
-@import "./layouts/navs";
-@import "./layouts/mains";
-@import "./layouts/footers";
+@use "./themes/template";
 
-@import "./pages/all";
-@import "./pages/home";
-@import "./pages/menus";
+
+// @use "./components/buttons";
+// @use "./components/lists";
+// @use "./components/cards";
+// @use "./components/POSTS/_post";
+// @import 'components/ADMIN/admin-panel';
+// @import 'components/ADMIN/day-time-diagram';
+// @use "./components/BOOKING/booking-calendar";
+
+@use "./layouts/headers";
+@use "./layouts/navs";
+@use "./layouts/mains";
+@use "./layouts/footers";
+
+@use "./pages/all";
+@use "./pages/home";
+@use "./pages/menus";
+
+@use "./components/productsPage/productsPage";
+@use "./components/productCard/productCard";
+@use "./components/productFormModal/productFormModal";
+@use "./components/productActions/productActions";
+@use "./components/productDetail/productDetail";
+
+// Dashboard components
+@use "./components/DASHBOARD/index.scss";
+

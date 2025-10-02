@@ -1,7 +1,7 @@
 import prisma from '@/lib/prisma';
-import ServicesPageClient from '@/components/ServicesPageClient';
+import ServicesPageClient from '@/components/___ServicesPageClient';
 import '@/assets/scss/components/BOOKING/booking-calendar.scss';
-import '@/assets/scss/components/PAGES/services-page.scss';
+import '@/assets/scss/components/PAGES/___services-page_.scss';
 import '@/assets/scss/components/ADMIN/admin-panel.scss';
 
 export default async function ServicesPage() {

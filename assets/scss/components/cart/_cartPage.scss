@@ -1,0 +1,313 @@
+@use "sass:map";
+@use "../../utils/variables" as *;
+
+/************************************************************/
+/**************************PLACEHOLDER**************************/
+/************************************************************/
+%_cartPage {
+  display: grid;
+  gap: $L;
+  padding: 2rem 1rem 4rem;
+  max-width: 1120px;
+  margin: 0 auto;
+  font-family: $contenus;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: $S;
+  }
+
+  &__title {
+    font-family: $titres;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: $primary-color;
+  }
+
+  &__summary {
+    display: flex;
+    align-items: center;
+    gap: $S;
+    font-size: 1rem;
+    color: $gray-600;
+  }
+
+  &__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: $L;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__list {
+    display: grid;
+    gap: $M;
+  }
+
+  &__empty {
+    display: grid;
+    gap: $S;
+    justify-items: center;
+    padding: 3rem 1rem;
+    border-radius: 1.5rem;
+    background: rgba($primary-color, 0.05);
+    border: 1px dashed rgba($primary-color, 0.2);
+    text-align: center;
+
+    &Message {
+      font-size: 1.1rem;
+      color: $gray-500;
+      max-width: 420px;
+    }
+
+    &Action {
+      border: none;
+      border-radius: 999px;
+      padding: 0.9rem 1.8rem;
+      background: linear-gradient(135deg, $primary-color 0%, $primary-hover 100%);
+      color: $white;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: $shadow-md;
+
+      &:hover,
+      &:focus-visible {
+        transform: translateY(-2px);
+        box-shadow: $shadow-lg;
+        outline: none;
+      }
+    }
+  }
+
+  &__item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: $M;
+    padding: $M;
+    border-radius: 1.25rem;
+    background: $white;
+    box-shadow: $shadow-md;
+    align-items: center;
+
+    @media (max-width: 640px) {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    &Image {
+      width: 96px;
+      height: 96px;
+      border-radius: 1rem;
+      overflow: hidden;
+      background: $gray-100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    &Content {
+      display: grid;
+      gap: $S;
+    }
+
+    &Title {
+      font-family: $titres;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: $gray-800;
+    }
+
+    &Meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $S;
+      font-size: 0.9rem;
+      color: $gray-500;
+    }
+
+    &Controls {
+      display: flex;
+      gap: $S;
+      align-items: center;
+      justify-content: flex-end;
+
+      @media (max-width: 640px) {
+        justify-content: center;
+      }
+    }
+
+    &Quantity {
+      display: inline-flex;
+      align-items: center;
+      gap: $XS;
+      border-radius: 999px;
+      border: 1px solid rgba($gray-300, 0.9);
+      padding: 0.35rem 0.75rem;
+      background: rgba($gray-50, 0.8);
+
+      button {
+        border: none;
+        background: transparent;
+        font-size: 1.1rem;
+        cursor: pointer;
+        color: $primary-color;
+        line-height: 1;
+
+        &:hover,
+        &:focus-visible {
+          color: $primary-hover;
+          outline: none;
+        }
+      }
+
+      span {
+        min-width: 2rem;
+        text-align: center;
+        font-weight: 600;
+      }
+    }
+
+    &Price {
+      font-family: $titres;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: $primary-color;
+    }
+
+    &Remove {
+      border: none;
+      background: transparent;
+      color: $danger-color;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+
+      &:hover,
+      &:focus-visible {
+        color: $danger-hover;
+        text-decoration: underline;
+        outline: none;
+      }
+    }
+  }
+
+  &__sidebar {
+    position: sticky;
+    top: 120px;
+    display: grid;
+    gap: $S;
+    padding: $M;
+    border-radius: 1.25rem;
+    background: $white;
+    box-shadow: $shadow-lg;
+    height: fit-content;
+  }
+
+  &__totals {
+    display: grid;
+    gap: $XS;
+    font-size: 0.95rem;
+    color: $gray-600;
+
+    &Row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &--accent {
+        font-family: $titres;
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: $primary-color;
+      }
+    }
+  }
+
+  &__checkout {
+    border: none;
+    border-radius: 999px;
+    padding: 0.95rem 1.8rem;
+    background: linear-gradient(135deg, $success-color 0%, $success-hover 100%);
+    color: $white;
+    font-family: $titres;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: $shadow-lg;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: $shadow-xl;
+      outline: none;
+    }
+  }
+
+  &__legal {
+    font-size: 0.85rem;
+    color: $gray-400;
+    text-align: center;
+  }
+}
+
+/************************************************************/
+/**************************MIXIN**************************/
+/************************************************************/
+@mixin cartPage($paramMixi_: $cartPage) {
+  $paramMixi: cartPage(map.merge($cartPage, $paramMixi_));
+
+  @extend %_cartPage;
+  &__header {@extend %_cartPage__header;}
+  &__title {@extend %_cartPage__title;}
+  &__summary {@extend %_cartPage__summary;}
+  &__layout {@extend %_cartPage__layout;}
+  &__list {@extend %_cartPage__list;}
+  &__empty {@extend %_cartPage__empty;}
+  &__emptyMessage {@extend %_cartPage__emptyMessage;}
+  &__emptyAction {@extend %_cartPage__emptyAction;}
+  &__item {@extend %_cartPage__item;}
+  &__itemImage {@extend %_cartPage__itemImage;}
+  &__itemContent {@extend %_cartPage__itemContent;}
+  &__itemTitle {@extend %_cartPage__itemTitle;}
+  &__itemMeta {@extend %_cartPage__itemMeta;}
+  &__itemControls {@extend %_cartPage__itemControls;}
+  &__itemQuantity {@extend %_cartPage__itemQuantity;}
+  &__itemPrice {@extend %_cartPage__itemPrice;}
+  &__itemRemove {@extend %_cartPage__itemRemove;}
+  &__sidebar {@extend %_cartPage__sidebar;}
+  &__totals {@extend %_cartPage__totals;}
+  &__totalsRow {@extend %_cartPage__totalsRow;}
+  &__totalsRow--accent {@extend %_cartPage__totalsRow--accent;}
+  &__checkout {@extend %_cartPage__checkout;}
+  &__legal {@extend %_cartPage__legal;}
+}
+
+/************************************************************/
+/**************************FUNCTION**************************/
+/************************************************************/
+@function cartPage($defaultValues) {
+  @return map.merge(
+    $defaultValues,
+    (
+    )
+  );
+}
+
+$cartPage: (
+);
+
+.cartPage {
+  @include cartPage();
+}

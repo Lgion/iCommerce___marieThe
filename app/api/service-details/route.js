@@ -40,6 +40,8 @@ export async function POST(request) {
       data: {
         videoUrl: data.videoUrl,
         imageUrl: data.imageUrl,
+        imagePublicId: data.imagePublicId || null,
+        imageFolder: data.imageFolder || null,
         firstName: data.firstName,
         lastName: data.lastName,
         pseudo: data.pseudo,
@@ -79,6 +81,8 @@ export async function PUT(request) {
       data: {
         videoUrl: data.videoUrl,
         imageUrl: data.imageUrl,
+        imagePublicId: data.imagePublicId || null,
+        imageFolder: data.imageFolder || null,
         firstName: data.firstName,
         lastName: data.lastName,
         pseudo: data.pseudo,

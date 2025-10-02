@@ -1,0 +1,322 @@
+@import '../../utils/variables.scss';
+
+.chart-container {
+  background: $dashboardCardBg;
+  border-radius: $dashboardRadiusLg;
+  box-shadow: $shadow-sm;
+  border: 1px solid $dashboardBorderColor;
+  overflow: hidden;
+
+  &__header {
+    padding: $M;
+    border-bottom: 1px solid $dashboardBorderColor;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: $S_;
+  }
+
+  &__title-section {
+    flex: 1;
+  }
+
+  &__title {
+    font-size: 18px;
+    font-weight: 600;
+    color: $dashboardTextPrimary;
+    margin-bottom: 4px;
+  }
+
+  &__subtitle {
+    font-size: 13px;
+    color: $dashboardTextSecondary;
+  }
+
+  &__controls {
+    display: flex;
+    gap: $S;
+    align-items: center;
+  }
+
+  &__period-selector {
+    display: flex;
+    gap: $XS;
+    background: $gray-100;
+    padding: 4px;
+    border-radius: $dashboardRadiusSm;
+  }
+
+  &__period-btn {
+    padding: $XS $S_;
+    border: none;
+    background: transparent;
+    color: $dashboardTextSecondary;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+
+    &:hover {
+      color: $dashboardTextPrimary;
+    }
+
+    &--active {
+      background: $white;
+      color: $primary-color;
+      box-shadow: $shadow-sm;
+    }
+  }
+
+  &__menu-btn {
+    padding: $S;
+    border: none;
+    background: transparent;
+    color: $dashboardTextMuted;
+    cursor: pointer;
+    border-radius: $dashboardRadiusSm;
+    transition: all 0.2s;
+
+    &:hover {
+      background: $dashboardHoverBg;
+      color: $dashboardTextPrimary;
+    }
+  }
+
+  &__body {
+    padding: $M;
+  }
+
+  &__canvas {
+    width: 100%;
+    height: 300px;
+    position: relative;
+
+    &--small {
+      height: 200px;
+    }
+
+    &--large {
+      height: 400px;
+    }
+  }
+
+  &__legend {
+    display: flex;
+    gap: $M;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: $M;
+    border-top: 1px solid $dashboardBorderColor;
+  }
+
+  &__legend-item {
+    display: flex;
+    align-items: center;
+    gap: $S;
+    font-size: 13px;
+    color: $dashboardTextSecondary;
+  }
+
+  &__legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+  }
+
+  &__legend-label {
+    font-weight: 500;
+  }
+
+  &__legend-value {
+    color: $dashboardTextPrimary;
+    font-weight: 600;
+  }
+
+  &__footer {
+    padding: $M;
+    border-top: 1px solid $dashboardBorderColor;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__summary {
+    display: flex;
+    gap: $L;
+  }
+
+  &__summary-item {
+    &-label {
+      font-size: 12px;
+      color: $dashboardTextSecondary;
+      margin-bottom: 4px;
+    }
+
+    &-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: $dashboardTextPrimary;
+    }
+
+    &-trend {
+      font-size: 12px;
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+
+      &--up {
+        color: $success-color;
+      }
+
+      &--down {
+        color: $danger-color;
+      }
+    }
+  }
+
+  &__export-btn {
+    padding: $S $S_;
+    border: 1px solid $dashboardBorderColor;
+    background: $white;
+    color: $dashboardTextPrimary;
+    cursor: pointer;
+    border-radius: $dashboardRadiusSm;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: $S;
+
+    &:hover {
+      border-color: $primary-color;
+      color: $primary-color;
+    }
+  }
+
+  &__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    color: $dashboardTextMuted;
+    flex-direction: column;
+    gap: $S_;
+
+    &-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid $dashboardBorderColor;
+      border-top-color: $primary-color;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    &-text {
+      font-size: 14px;
+    }
+  }
+
+  &__error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    color: $danger-color;
+    flex-direction: column;
+    gap: $S;
+
+    &-icon {
+      font-size: 48px;
+    }
+
+    &-text {
+      font-size: 14px;
+    }
+  }
+
+  &__no-data {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    color: $dashboardTextMuted;
+    flex-direction: column;
+    gap: $S;
+
+    &-icon {
+      font-size: 48px;
+      opacity: 0.5;
+    }
+
+    &-text {
+      font-size: 14px;
+    }
+  }
+
+  // Variantes
+  &--compact {
+    .chart-container__header {
+      padding: $S_;
+    }
+
+    .chart-container__body {
+      padding: $S_;
+    }
+
+    .chart-container__canvas {
+      height: 200px;
+    }
+  }
+
+  &--borderless {
+    border: none;
+    box-shadow: none;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .chart-container {
+    &__header {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    &__controls {
+      justify-content: space-between;
+    }
+
+    &__canvas {
+      height: 250px;
+
+      &--large {
+        height: 300px;
+      }
+    }
+
+    &__summary {
+      flex-direction: column;
+      gap: $S_;
+    }
+
+    &__footer {
+      flex-direction: column;
+      gap: $S_;
+      align-items: stretch;
+    }
+
+    &__export-btn {
+      justify-content: center;
+    }
+  }
+}

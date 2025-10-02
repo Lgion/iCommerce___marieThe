@@ -1,0 +1,225 @@
+@import '../../utils/variables.scss';
+
+.stat-card {
+  background: $dashboardCardBg;
+  border-radius: $dashboardRadiusLg;
+  padding: $M;
+  box-shadow: $shadow-sm;
+  border: 1px solid $dashboardBorderColor;
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: $shadow-md;
+    transform: translateY(-2px);
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: $S_;
+  }
+
+  &__icon {
+    width: 48px;
+    height: 48px;
+    border-radius: $dashboardRadiusMd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+
+    &--revenue {
+      background: $statRevenueBg;
+      color: $statRevenueColor;
+    }
+
+    &--bookings {
+      background: $statBookingsBg;
+      color: $statBookingsColor;
+    }
+
+    &--customers {
+      background: $statCustomersBg;
+      color: $statCustomersColor;
+    }
+
+    &--products {
+      background: $statProductsBg;
+      color: $statProductsColor;
+    }
+
+    &--services {
+      background: rgba($primary-color, 0.1);
+      color: $primary-color;
+    }
+  }
+
+  &__menu {
+    cursor: pointer;
+    padding: $XS;
+    color: $dashboardTextMuted;
+    transition: color 0.2s;
+
+    &:hover {
+      color: $dashboardTextPrimary;
+    }
+  }
+
+  &__body {
+    margin-bottom: $S_;
+  }
+
+  &__label {
+    color: $dashboardTextSecondary;
+    font-size: 14px;
+    margin-bottom: $XS;
+    font-weight: 500;
+  }
+
+  &__value {
+    font-size: 32px;
+    font-weight: 700;
+    color: $dashboardTextPrimary;
+    line-height: 1.2;
+    margin-bottom: $XS;
+
+    &--small {
+      font-size: 24px;
+    }
+
+    &--large {
+      font-size: 40px;
+    }
+  }
+
+  &__subtitle {
+    font-size: 12px;
+    color: $dashboardTextMuted;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: $S_;
+    border-top: 1px solid $dashboardBorderColor;
+  }
+
+  &__trend {
+    display: flex;
+    align-items: center;
+    gap: $XS;
+    font-size: 13px;
+    font-weight: 600;
+
+    &--up {
+      color: $success-color;
+    }
+
+    &--down {
+      color: $danger-color;
+    }
+
+    &--neutral {
+      color: $dashboardTextMuted;
+    }
+
+    &-icon {
+      font-size: 16px;
+    }
+
+    &-value {
+      font-weight: 700;
+    }
+
+    &-label {
+      font-weight: 400;
+      color: $dashboardTextSecondary;
+    }
+  }
+
+  &__link {
+    font-size: 13px;
+    color: $primary-color;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: $XS;
+    transition: color 0.2s;
+
+    &:hover {
+      color: $primary-hover;
+    }
+  }
+
+  // Variantes de taille
+  &--compact {
+    padding: $S_;
+
+    .stat-card__icon {
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+    }
+
+    .stat-card__value {
+      font-size: 24px;
+    }
+  }
+
+  &--large {
+    padding: $L;
+
+    .stat-card__icon {
+      width: 56px;
+      height: 56px;
+      font-size: 28px;
+    }
+
+    .stat-card__value {
+      font-size: 40px;
+    }
+  }
+
+  // Variante avec bordure colorée
+  &--bordered {
+    border-left-width: 4px;
+
+    &.stat-card--revenue {
+      border-left-color: $statRevenueColor;
+    }
+
+    &.stat-card--bookings {
+      border-left-color: $statBookingsColor;
+    }
+
+    &.stat-card--customers {
+      border-left-color: $statCustomersColor;
+    }
+
+    &.stat-card--products {
+      border-left-color: $statProductsColor;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .stat-card {
+    &__value {
+      font-size: 24px;
+
+      &--large {
+        font-size: 32px;
+      }
+    }
+
+    &__icon {
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+    }
+  }
+}

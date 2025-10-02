@@ -1,0 +1,163 @@
+@import '../../utils/variables.scss';
+
+.dashboard-nav {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &__header {
+    padding: $M;
+    border-bottom: 1px solid $dashboardBorderColor;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: $S_;
+    font-size: 20px;
+    font-weight: 700;
+    color: $dashboardTextPrimary;
+    text-decoration: none;
+
+    &-icon {
+      width: 32px;
+      height: 32px;
+      background: $primary-color;
+      border-radius: $dashboardRadiusSm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $white;
+    }
+  }
+
+  &__sections {
+    flex: 1;
+    overflow-y: auto;
+    padding: $M 0;
+  }
+
+  &__section {
+    margin-bottom: $M;
+
+    &-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: $dashboardTextMuted;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 0 $M;
+      margin-bottom: $S;
+    }
+
+    &-items {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $S_;
+    padding: $S_ $M;
+    color: $dashboardTextSecondary;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    position: relative;
+
+    &:hover {
+      background: $dashboardHoverBg;
+      color: $dashboardTextPrimary;
+    }
+
+    &--active {
+      background: rgba($primary-color, 0.1);
+      color: $primary-color;
+      font-weight: 500;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: $primary-color;
+      }
+    }
+
+    &-icon {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    &-text {
+      flex: 1;
+      font-size: 14px;
+    }
+
+    &-badge {
+      background: $danger-color;
+      color: $white;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 10px;
+      min-width: 18px;
+      text-align: center;
+    }
+
+    &-arrow {
+      font-size: 12px;
+      transition: transform 0.2s;
+
+      &--expanded {
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  &__submenu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    padding-left: $L;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+
+    &--expanded {
+      max-height: 500px;
+    }
+
+    .dashboard-nav__item {
+      padding: $S $M;
+      font-size: 13px;
+    }
+  }
+
+  &__footer {
+    padding: $M;
+    border-top: 1px solid $dashboardBorderColor;
+  }
+
+  &__version {
+    font-size: 12px;
+    color: $dashboardTextMuted;
+    text-align: center;
+  }
+}
+
+// Dark mode support (optionnel)
+@media (prefers-color-scheme: dark) {
+  .dashboard-nav {
+    // Variables dark mode peuvent être ajoutées ici
+  }
+}

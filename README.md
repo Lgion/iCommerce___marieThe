@@ -1,3 +1,34 @@
+- CETTE TACHE N'A PEUTETRE PLUS AUCUNE UTILITÉ
+VÉRIFIÉ LA PERSTINENCE DE CETTE TACHE
+je veux un schema Config permettant de configurer divers chose pour l'application.
+    Il faut les propriétés suivante:
+        id,
+        key,
+        value,
+        options
+
+    la key permettant d'identifier la config, la value et la valeur de cette config, et  options est juste un objet au besoin (vide par defaut)
+- j'ai besoin d'une page d'administration /dashboard, permettant de voir selon 3 angles l'administration de l'application dans un menu de navigation d'administration:
+    - les statistiques sur (charts, key datas/stats, sells&registers summaries, etc): 
+        - les services
+        - les produits
+        - les réservations
+        - les clients
+        - les boutiques
+    - la maintenance (opérations CRUD):
+        - des produits
+        - des services
+        - des slots
+        - promotions
+    - outils crm: 
+        - les clients et utilsiateurs non connectés
+            - promotions, offres, réductions, ...
+        - gestion des shops et de leurs détails (description services, ..etc)
+Sur la page d'accueil du dashboard, pour l'instant il ne devra s'afficher que l'historique des connexion au dashboard (il faut certainement prévoir un modele prisma pour gérer xa)
+
+
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

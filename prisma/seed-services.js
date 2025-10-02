@@ -3,23 +3,12 @@ const { PrismaClient } = require('../app/generated/prisma');
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('🌱 Début du seeding des services...');
-
-  try {
-    // Créer un utilisateur de test s'il n'existe pas
-    let testUser = await prisma.user.findFirst({
-      where: { email: 'marie.dubois@example.com' }
-    });
-
-    if (!testUser) {
-      testUser = await prisma.user.create({
-        data: {
-          email: 'marie.dubois@example.com',
-          password: 'hashedpassword123'
-        }
-      });
-      console.log('✅ Utilisateur de test créé');
-    }
+  console.log('🌱 Script de seed - Ce script ne doit plus être utilisé');
+  console.log('🔄 L\'application utilise maintenant un système d\'onboarding dynamique');
+  console.log('ℹ️  Les données sont créées automatiquement lors de l\'inscription du premier utilisateur');
+  return;
+  
+  // Le code ci-dessous est conservé pour référence mais ne sera pas exécuté
 
     // Créer une catégorie de service
     let serviceCategory = await prisma.serviceCategory.findFirst({
@@ -205,27 +194,19 @@ async function main() {
       // Créer quelques utilisateurs pour les commentaires
       const commentUsers = await Promise.all([
         prisma.user.upsert({
-          where: { email: 'sophie.martin@example.com' },
+          where: { email: 'legion.athenienne@gmail.com' },
           update: {},
           create: {
-            email: 'sophie.martin@example.com',
-            password: 'hashedpassword123'
+            email: 'legion.athenienne@gmail.com',
+            clerkId: 'seed_legion_athenienne' // ID fictif pour les seeds
           }
         }),
         prisma.user.upsert({
-          where: { email: 'julie.bernard@example.com' },
+          where: { email: 'hi.cyril@gmail.com' },
           update: {},
           create: {
-            email: 'julie.bernard@example.com',
-            password: 'hashedpassword123'
-          }
-        }),
-        prisma.user.upsert({
-          where: { email: 'claire.dubois@example.com' },
-          update: {},
-          create: {
-            email: 'claire.dubois@example.com',
-            password: 'hashedpassword123'
+            email: 'hi.cyril@gmail.com',
+            clerkId: 'seed_hi_cyril' // ID fictif pour les seeds
           }
         })
       ]);
@@ -250,7 +231,7 @@ async function main() {
         {
           text: 'Maquillage de mariée magnifique ! Marie a su sublimer mon regard tout en respectant mes souhaits. Merci !',
           rating: 5,
-          userId: commentUsers[2].id,
+          userId: commentUsers[0].id, // Utilise le premier utilisateur maintenant qu'on en a seulement 2
           serviceId: services[1]?.id
         },
         {

@@ -3,13 +3,50 @@ import prisma from '@/lib/prisma';
 
 export async function POST(request: NextRequest) {
   try {
-    const { slotId, duration } = await request.json();
+    const { slotId, duration, userId } = await request.json();
 
     if (!slotId || !duration) {
       return NextResponse.json(
         { error: 'ID du créneau et durée requis' },
         { status: 400 }
       );
+    }
+
+    // Gérer l'utilisateur Clerk ou créer un utilisateur de test
+    let actualUserId = userId;
+    if (!userId) {
+      console.log('[DEBUG] Pas d\'userId fourni, création d\'un utilisateur de test...');
+      // Pour les tests sans Clerk, utiliser un utilisateur de seed
+      const testUser = await prisma.user.findFirst({
+        where: { clerkId: 'seed_marie_dubois' }
+      });
+      
+      if (!testUser) {
+        return NextResponse.json(
+          { error: 'Aucun utilisateur de test disponible. Veuillez vous connecter avec Clerk.' },
+          { status: 401 }
+        );
+      }
+      actualUserId = testUser.id;
+      console.log(`[DEBUG] Utilisateur de test créé/trouvé: ${actualUserId}`);
+    } else {
+      console.log(`[DEBUG] Clerk ID fourni: ${userId}`);
+      // Chercher l'utilisateur par son clerkId
+      let existingUser = await prisma.user.findUnique({
+        where: { clerkId: userId }
+      });
+      
+      if (!existingUser) {
+        // Si l'utilisateur n'existe pas, on refuse la réservation
+        // L'utilisateur doit d'abord être synchronisé via useUserSync
+        return NextResponse.json(
+          { error: 'Utilisateur non trouvé. Veuillez recharger la page.' },
+          { status: 404 }
+        );
+      }
+      
+      actualUserId = existingUser.id; // Utiliser l'ID Prisma, pas l'ID Clerk
+      console.log(`[DEBUG] Utilisateur trouvé/créé - Prisma ID: ${actualUserId}, Clerk ID: ${userId}`);
     }
 
     // Vérifier que le créneau de départ existe
@@ -34,6 +71,7 @@ export async function POST(request: NextRequest) {
     console.log(`- Slots nécessaires: ${slotsNeeded}`);
     console.log(`- ServiceId: ${startSlot.serviceId}`);
     console.log(`- Heure de début: ${startSlot.startTime}`);
+    console.log(`- userId: ${userId}`);
     
     // Trouver tous les slots consécutifs nécessaires
     const endTime = new Date(startSlot.startTime);
@@ -87,28 +125,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Créer une commande pour la réservation
-    // Note: Pour les services, nous créons un produit virtuel temporaire
-    // ou nous pourrions étendre le modèle pour gérer les services directement
+    // Créer une commande pour la réservation liée à l'utilisateur
     const order = await prisma.order.create({
       data: {
-        total: startSlot.service.prixHoraire,
-        status: 'PENDING',
-        items: {
-          create: {
-            productId: startSlot.serviceId, // Utilisation temporaire du serviceId comme productId
-            variation: null,
-            quantity: 1,
-            price: startSlot.service.prixHoraire
-          }
-        }
+        userId: actualUserId,
+        total: (startSlot.service.prixHoraire * duration) / 60, // Prix proportionnel à la durée
+        status: 'PENDING'
       },
       include: {
-        items: true
+        user: true
       }
     });
 
-    // Marquer tous les créneaux requis comme réservés
+    console.log(`[DEBUG] Commande créée: ${order.id} pour l'utilisateur ${actualUserId}`);
+
+    // Marquer tous les créneaux requis comme réservés avec les nouvelles relations
     const slotIds = requiredSlots.slice(0, slotsNeeded).map(slot => slot.id);
     
     await prisma.serviceSlot.updateMany({
@@ -119,9 +150,12 @@ export async function POST(request: NextRequest) {
       },
       data: {
         isBooked: true,
-        orderItemId: order.items[0].id
+        bookedById: actualUserId,
+        bookedAt: new Date()
       }
     });
+
+    console.log(`[DEBUG] ${slotIds.length} créneaux marqués comme réservés pour l'utilisateur ${actualUserId}`);
 
     // Récupérer les slots mis à jour pour la réponse
     const updatedSlots = await prisma.serviceSlot.findMany({
@@ -132,9 +166,10 @@ export async function POST(request: NextRequest) {
       },
       include: {
         service: true,
-        orderItem: {
-          include: {
-            order: true
+        bookedBy: {
+          select: {
+            id: true,
+            email: true
           }
         }
       },
@@ -166,9 +201,10 @@ export async function GET() {
       where: { isBooked: true },
       include: {
         service: true,
-        orderItem: {
-          include: {
-            order: true
+        bookedBy: {
+          select: {
+            id: true,
+            email: true
           }
         }
       },

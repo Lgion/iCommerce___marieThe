@@ -1,3 +1,6 @@
+// @use "sass:map";
+@use "sass:color";
+
 // Variables de thème
 $primary-color: #2c3e50;
 $secondary-color: #3498db;
@@ -13,11 +16,15 @@ $font-primary: 'Inter', sans-serif;
 $font-secondary: 'Poppins', sans-serif;
 
 .weekly-booking {
-  min-height: 100vh;
+  // min-height: 100vh;
   background: #1a1a1a; // Fond sombre comme dans votre screenshot
   color: white;
   font-family: $font-primary;
   padding: 1rem;
+  margin: 1em 2em;
+  height: 600px;
+  box-shadow: 0 0 10px 1px black;
+  border-radius: 5px;
 
   &__header {
     display: flex;
@@ -42,7 +49,7 @@ $font-secondary: 'Poppins', sans-serif;
     transition: all 0.3s ease;
 
     &:hover {
-      background: darken($secondary-color, 10%);
+      background: color.adjust($secondary-color, $lightness: 10%);
       transform: scale(1.1);
     }
   }
@@ -74,6 +81,8 @@ $font-secondary: 'Poppins', sans-serif;
     overflow: hidden;
     max-width: 100%;
     overflow-x: auto;
+    height: 80%;
+    overflow: scroll;
   }
 
   &__time-header {
@@ -88,6 +97,11 @@ $font-secondary: 'Poppins', sans-serif;
     font-size: 0.8rem;
     color: white;
     border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 11;
+    background: #464646;
+    color: white;
   }
 
   &__row {
@@ -113,11 +127,78 @@ $font-secondary: 'Poppins', sans-serif;
     border: 1px solid rgba(255, 255, 255, 0.05);
     position: relative;
 
+    &-delete {
+      position: absolute;
+      top: -.5em;
+      right: -.5em;
+      z-index: 1;
+      width: 20px;
+      height: 20px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(231, 76, 60, 0.9);
+      color: #fff;
+      font-size: 0.9rem;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease, background 0.2s ease;
+
+      &:hover {
+        background: color.adjust($accent-color, $lightness: 10%);
+        transform: scale(1.05);
+      }
+    }
+
+    &-select {
+      position: absolute;
+      top: -.25em;
+      right: .5em;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 2px 6px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      input {
+        appearance: none;
+        width: 12px;
+        height: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        border-radius: 3px;
+        background: transparent;
+        position: relative;
+        transition: background 0.2s ease, border-color 0.2s ease;
+
+        &:checked {
+          background: $secondary-color;
+          border-color: $secondary-color;
+
+          &::after {
+            content: '';
+            position: absolute;
+            top: 1px;
+            left: 3px;
+            width: 4px;
+            height: 7px;
+            border-right: 2px solid #fff;
+            border-bottom: 2px solid #fff;
+            transform: rotate(45deg);
+          }
+        }
+      }
+    }
+
     &--available {
       background: #4CAF50; // Vert comme dans votre screenshot
       
       &:hover {
-        background: lighten(#4CAF50, 10%);
+        background: color.adjust(#4CAF50, $lightness: 10%);
         transform: scale(1.02);
         z-index: 10;
         box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
@@ -177,8 +258,146 @@ $font-secondary: 'Poppins', sans-serif;
       z-index: 5;
       
       &:hover {
-        background: lighten(#2196F3, 10%) !important;
+        background: color.adjust(#2196F3, $lightness: 10%) !important;
       }
+    }
+  }
+}
+
+
+.weekly-booking {
+  &__bulk-actions {
+    position: fixed;
+    right: 16px;
+    bottom: 96px;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  &__bulk-delete {
+    background: rgba(231, 76, 60, 0.95);
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 0.75rem 1.75rem;
+    font-family: $font-secondary;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(231, 76, 60, 0.45);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(231, 76, 60, 0.55);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 8px 16px rgba(231, 76, 60, 0.35);
+    }
+  }
+}
+
+.bookingPage{
+  position: relative;
+  font-family: $font-primary;
+
+  &__admin-bar {
+    position: sticky;
+    top: 1rem;
+    display: inline-flex;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1.5rem;
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(12px);
+    z-index: 40;
+  }
+
+  &__admin-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1.1rem;
+    border-radius: 999px;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.85);
+    font-family: $font-secondary;
+    font-size: 0.9rem;
+    background: rgba(52, 152, 219, 0.25);
+    border: 1px solid rgba(52, 152, 219, 0.35);
+    transition: background 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+      background: color.adjust($secondary-color, $lightness: -10%);
+      transform: translateY(-1px);
+    }
+  }
+
+  &__admin-button {
+    padding: 0.6rem 1.4rem;
+    border-radius: 999px;
+    border: none;
+    font-family: $font-secondary;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    color: #fff;
+    background: linear-gradient(135deg, $secondary-color 0%, color.adjust($secondary-color, $lightness: -10%) 100%);
+    box-shadow: 0 12px 32px rgba(52, 152, 219, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 36px rgba(52, 152, 219, 0.45);
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    &--slots {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+  }
+
+  &__calendar-toggle {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 60;
+    padding: 0.85rem 1.8rem;
+    border-radius: 999px;
+    border: none;
+    font-family: $font-secondary;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.03em;
+    color: #fff;
+    background: linear-gradient(135deg, $primary-color 0%, color.adjust($primary-color, $lightness: 8%) 40%, $secondary-color 100%);
+    box-shadow: 0 15px 45px rgba(44, 62, 80, 0.45);
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+    &:hover {
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 18px 60px rgba(44, 62, 80, 0.55);
+    }
+
+    &:active {
+      transform: translateY(0) scale(0.99);
     }
   }
 }
@@ -258,7 +477,7 @@ $font-secondary: 'Poppins', sans-serif;
       color: white;
 
       &:hover {
-        background: darken($success-color, 10%);
+        background: color.adjust($success-color, $lightness: 10%);
         transform: translateY(-2px);
       }
     }
@@ -278,30 +497,33 @@ $font-secondary: 'Poppins', sans-serif;
     
     &--success {
       background: rgba($success-color, 0.2);
-      color: lighten($success-color, 20%);
+      color: color.adjust($success-color, $lightness: 20%);
       border: 1px solid rgba($success-color, 0.3);
     }
     
+    &--error,&--success {
+      text-shadow: 0 0 1px BLACK,0 0 0px BLACK,0 0 0px BLACK;
+    }
     &--error {
       background: rgba($accent-color, 0.2);
-      color: lighten($accent-color, 20%);
+      color: color.adjust($accent-color, $lightness: 20%);
       border: 1px solid rgba($accent-color, 0.3);
     }
   }
   
   &__confirm {
-    margin-top: 2rem;
-    padding: 1.5rem;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     backdrop-filter: blur(10px);
     animation: slideUp 0.4s ease;
+    background: black;
+    padding: .25em;
     
     &-details {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1rem;
-      margin-bottom: 1.5rem;
+      padding: .25em;
       
       p {
         margin: 0;
@@ -329,7 +551,7 @@ $font-secondary: 'Poppins', sans-serif;
       transition: all 0.3s ease;
       
       &:hover {
-        background: darken($success-color, 10%);
+        background: color.adjust($success-color, $lightness: 10%);
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba($success-color, 0.4);
       }

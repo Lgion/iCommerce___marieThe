@@ -6,6 +6,15 @@ $tablette: "taille M";
 $desktop: "taille L";
 $tv: "taille XL";
 
+// Dimensions
+$XS: 5px;
+$S: 10px;
+$S_: 15px;
+$M: 20px;
+$L: 30px;
+$XL: 50px;
+$XXL: 60px;
+
 // Couleurs de thème
 $primary-color: #3b82f6;
 $primary-hover: #2563eb;
@@ -13,6 +22,10 @@ $success-color: #10b981;
 $success-hover: #059669;
 $danger-color: #ef4444;
 $danger-hover: #dc2626;
+// ---
+$primary: #111;
+$secondary: #222;
+$ternary: #333;
 
 // Couleurs grises
 $gray-50: #f9fafb;
@@ -33,3 +46,41 @@ $shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06
 $shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 $shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
+// TEXTES
+$titres: 'typography des titre';
+$contenus: 'typography des contenus';
+
+// ============================================
+// DASHBOARD VARIABLES
+// ============================================
+
+// Dashboard Colors
+$dashboardBg: $gray-50;
+$dashboardSidebarBg: $white;
+$dashboardCardBg: $white;
+$dashboardBorderColor: $gray-200;
+$dashboardTextPrimary: $gray-900;
+$dashboardTextSecondary: $gray-600;
+$dashboardTextMuted: $gray-400;
+$dashboardHoverBg: $gray-100;
+
+// Dashboard Stat Colors
+$statRevenueBg: #ecfdf5;
+$statRevenueColor: #059669;
+$statBookingsBg: #eff6ff;
+$statBookingsColor: #2563eb;
+$statCustomersBg: #fef3c7;
+$statCustomersColor: #d97706;
+$statProductsBg: #f3e8ff;
+$statProductsColor: #9333ea;
+
+// Dashboard Spacing
+$dashboardSidebarWidth: 260px;
+$dashboardHeaderHeight: 64px;
+$dashboardPadding: $M;
+$dashboardGap: $M;
+
+// Dashboard Border Radius
+$dashboardRadiusSm: 6px;
+$dashboardRadiusMd: 8px;
+$dashboardRadiusLg: 12px;

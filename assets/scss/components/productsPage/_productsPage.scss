@@ -1,7 +1,9 @@
+@use "sass:map";
+@use "../../utils/variables" as *;
 /************************************************************/
 /**************************PLACEHOLDER**************************/
 /************************************************************/
-%productsPage {
+%_productsPage {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 1rem;
@@ -12,10 +14,151 @@
     margin-bottom: 2rem;
   }
 
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  &__headerContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  &__feedback {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: $success-color;
+    background: rgba($success-color, 0.12);
+    border-radius: 0.85rem;
+    padding: 0.75rem 1rem;
+  }
+
   &__grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
+    padding:0;
+  }
+
+  &__empty {
+    display: grid;
+    gap: 1rem;
+    justify-items: center;
+    text-align: center;
+    padding: 3rem 1rem;
+    border-radius: 1.5rem;
+    background: rgba($primary-color, 0.05);
+    border: 1px dashed rgba($primary-color, 0.2);
+  }
+
+  &__emptyText {
+    font-size: 1.1rem;
+    color: $gray-600;
+    max-width: 480px;
+  }
+
+  &__emptyAction {
+    border: none;
+    border-radius: 999px;
+    padding: 0.85rem 1.6rem;
+    background: linear-gradient(135deg, $primary-color 0%, $primary-hover 100%);
+    color: $white;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: $shadow-md;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: $shadow-lg;
+      outline: none;
+    }
+  }
+
+  &__fab {
+    position: fixed;
+    bottom: 2.5rem;
+    right: 2.5rem;
+    width: 3.75rem;
+    height: 3.75rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, $primary-color 0%, $primary-hover 100%);
+    color: $white;
+    font-size: 2rem;
+    border: none;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    box-shadow: $shadow-lg;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: $shadow-xl;
+      outline: none;
+    }
+  }
+
+  &__cart {
+    position: fixed;
+    bottom: 6rem;
+    right: 2.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.75rem;
+    height: 3.75rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, $success-color 0%, $success-hover 100%);
+    color: $white;
+    text-decoration: none;
+    box-shadow: $shadow-lg;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    font-size: 1.35rem;
+    z-index: 1001;
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: $shadow-xl;
+      outline: none;
+    }
+  }
+
+  &__switch {
+    border: none;
+    border-radius: 50%;
+    width: 3.75rem;
+    height: 3.75rem;
+    font-size: 1.35rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: $white;
+    background: linear-gradient(135deg, $primary-hover 0%, $primary-color 100%);
+    box-shadow: $shadow-md;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: $shadow-lg;
+      outline: none;
+    }
+  }
+
+  &__switchControl {
+    position: fixed;
+    bottom: 3.5rem;
+    left: 2.5rem;
+    z-index: 1001;
   }
   //bgee
   //bgm
@@ -26,10 +169,46 @@
 /************************************************************/
 @mixin productsPage(
   $paramMixi_: $productsPage
-  , $gridColumns: map-get($productsPage, gridColumns)
+  , $gridColumns: map.get($productsPage, gridColumns)
   // BEMMixinParam
 ){
-  $paramMixi: productsPage(map-merge($productsPage, $paramMixi_));
+  $paramMixi: productsPage(map.merge($productsPage, $paramMixi_));
+
+  @extend %_productsPage;
+  >h1, &__title{
+    @extend %_productsPage__title;
+  }
+  >header, &__header {
+    @extend %_productsPage__header;
+  }
+  &__headerContent {
+    @extend %_productsPage__headerContent;
+  }
+  &__feedback {
+    @extend %_productsPage__feedback;
+  }
+
+  &__feedback--warning {
+    @extend %_productsPage__feedback;
+    background: rgba($danger-color, 0.1);
+    color: $danger-color;
+    border: 1px solid rgba($danger-color, 0.2);
+  }
+  >ul, &__grid{
+    @extend %_productsPage__grid;
+  }
+  &__empty {
+    @extend %_productsPage__empty;
+  }
+  &__emptyText {
+    @extend %_productsPage__emptyText;
+  }
+  &__emptyAction {
+    @extend %_productsPage__emptyAction;
+  }
+  &__fab {
+    @extend %_productsPage__fab;
+  }
 }
 
 /************************************************************/
@@ -37,24 +216,25 @@
 /************************************************************/
 @function productsPage(
   $params: $productsPage
-  , $gridColumns: map-get($productsPage, gridColumns)
+  , $gridColumns: map.get($productsPage, gridColumns)
   // BEMFunctionParam
 ){
-  @return map-merge($productsPage, (
+  @return map.merge($productsPage, (
     gridColumns: $gridColumns
   ));
 }
+$productsPage: ();
 
 /************************************************************/
 /**************************BLOC BEM**************************/
 /************************************************************/
 .productsPage {
-  @extend %productsPage;
+  @include productsPage;
 
   // Modifiers
   &--compact {
     padding: 1rem;
-    
+
     .productsPage__title {
       font-size: 1.5rem;
       margin-bottom: 1rem;
@@ -63,9 +243,48 @@
 
   // Elements
   &__grid {
-    @extend %productsPage__grid;
+    @extend %_productsPage__grid;
   }
 
+  &__header {
+    @extend %_productsPage__header;
+  }
+
+  &__headerContent {
+    @extend %_productsPage__headerContent;
+  }
+
+  &__feedback {
+    @extend %_productsPage__feedback;
+  }
+
+  &__empty {
+    @extend %_productsPage__empty;
+  }
+
+  &__emptyText {
+    @extend %_productsPage__emptyText;
+  }
+
+  &__emptyAction {
+    @extend %_productsPage__emptyAction;
+  }
+
+  &__fab {
+    @extend %_productsPage__fab;
+  }
+
+  &__cart {
+    @extend %_productsPage__cart;
+  }
+
+  &__switch {
+    @extend %_productsPage__switch;
+  }
+
+  &__switchControl {
+    @extend %_productsPage__switchControl;
+  }
   // States
   &.is-loading {
     opacity: 0.7;

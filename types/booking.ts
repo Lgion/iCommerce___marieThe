@@ -17,7 +17,7 @@ export interface ServiceSlot {
 }
 
 export interface BookingCalendarProps {
-  slots: ServiceSlot[];
+  slots?: ServiceSlot[];
   onSlotDelete?: (slotId: string) => void;
   onDateSelect?: (date: Date) => void;
 }

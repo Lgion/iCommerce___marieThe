@@ -1,38 +1,276 @@
+@use "sass:map";
+@use "sass:color";
+@use "../../utils/variables" as *;
 /************************************************************/
 /**************************PLACEHOLDER**************************/
 /************************************************************/
-%productCard {
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  transition: box-shadow 0.2s;
+%_productCard {
+  position: relative;
+  display: block;
+  font-family: $contenus;
+  color: $gray-700;
 
-  &:hover {
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  &__surface {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: 1.5rem;
+    background: linear-gradient(180deg, color.adjust($gray-50, $lightness: 4%), $white 70%, $gray-50 100%);
+    border: 1px solid rgba($gray-200, 0.6);
+    overflow: hidden;
+    box-shadow: $shadow-sm;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    min-height: 100%;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      background: linear-gradient(135deg, rgba($primary-color, 0.2), rgba($success-color, 0.2));
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      z-index: -1;
+    }
+
+    &:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: $shadow-lg;
+
+      &::before {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__media {
+    position: relative;
+    display: block;
+    cursor: pointer;
+    outline: none;
+
+    &:focus-visible {
+      box-shadow: 0 0 0 3px rgba($primary-color, 0.4);
+    }
   }
 
   &__image {
-    height: 12rem;
-    background-color: #f7fafc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 4 / 3;
+    background: radial-gradient(circle at top, rgba($primary-color, 0.12) 0%, rgba($primary-color, 0) 60%), $gray-100;
+
+    >img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__imageFallback {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    color: $gray-500;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  &__caption {
+    position: absolute;
+    bottom: $S;
+    left: $S;
+    background: rgba($white, 0.85);
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: $gray-600;
+    box-shadow: $shadow-sm;
   }
 
   &__content {
-    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: $S;
+    padding: $L;
   }
 
   &__title {
-    font-size: 1.25rem;
+    font-family: $titres;
+    font-size: 1.35rem;
     font-weight: 600;
-    margin-bottom: 0.5rem;
+    letter-spacing: 0.01em;
+    color: $gray-900;
+    margin: 0;
+  }
+
+  &__description {
+    font-size: 0.975rem;
+    line-height: 1.7;
+    color: $gray-600;
+  }
+
+  &__variations {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 0.75rem;
+    background: rgba($primary-color, 0.05);
+    border-radius: 0.85rem;
+  }
+
+  &__variationsLabel {
+    font-family: $titres;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $primary-color;
+  }
+
+  &__variationsList {
+    font-size: 0.9rem;
+    color: $gray-600;
+  }
+
+  &__footer {
+    margin-top: auto;
+    padding: $L;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $S;
+    border-top: 1px solid rgba($gray-200, 0.75);
+    background: linear-gradient(180deg, rgba($white, 0.96), rgba($gray-50, 0.92));
+  }
+
+  &__pricing {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+
+  &__actions {
+    display: grid;
+    gap: $S;
+    align-content: start;
+  }
+
+  &__actionsButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    padding: 0.7rem 1.2rem;
+    font-family: $titres;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
+    border: 1px solid transparent;
+    box-shadow: $shadow-md;
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: $shadow-lg;
+      outline: none;
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: $shadow-sm;
+    }
+
+    &--primary {
+      background: linear-gradient(135deg, $success-color 0%, $success-hover 100%);
+      color: $white;
+      border-color: transparent;
+    }
+
+    &--secondary {
+      background: rgba($white, 0.96);
+      color: $primary-color;
+      border-color: rgba($primary-color, 0.25);
+      box-shadow: none;
+
+      &:hover,
+      &:focus-visible {
+        box-shadow: $shadow-md;
+      }
+    }
   }
 
   &__price {
+    position: relative;
+    display: inline-flex;
+    align-items: baseline;
+    font-size: 1.25rem;
     font-weight: 700;
-    color: #2d3748;
+    color: $primary-color;
+
+    &::before {
+      content: attr(data-currency);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: $gray-500;
+      margin-right: 0.25rem;
+      text-transform: uppercase;
+    }
+  }
+
+  &__cta {
+    justify-self: flex-start;
+    border: none;
+    border-radius: 999px;
+    padding: 0.7rem 1.2rem;
+    background: linear-gradient(135deg, $primary-color 0%, $primary-hover 100%);
+    color: $white;
+    font-family: $titres;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: $shadow-md;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: $shadow-lg;
+      outline: none;
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: $shadow-sm;
+    }
+  }
+
+  &--interactive {
+    .productCard__surface {
+      cursor: pointer;
+    }
+  }
+
+  &--admin {
+    .productActions--overlay {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    &:hover,
+    &:focus-within {
+      .productActions--overlay {
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
   }
   //bgee
   //bgm
@@ -43,39 +281,65 @@
 /************************************************************/
 @mixin productCard(
   $paramMixi_: $productCard
-  , $shadowIntensity: map-get($productCard, shadowIntensity)
+  , $shadowIntensity: map.get($productCard, shadowIntensity)
   // BEMMixinParam
 ){
-  $paramMixi: productCard(map-merge($productCard, $paramMixi_));
-}
+  $paramMixi: productCard(map.merge($productCard, $paramMixi_));
 
+  @extend %_productCard;
+  &__surface {@extend %_productCard__surface;}
+  &__media {@extend %_productCard__media;}
+  &__image {@extend %_productCard__image;}
+  &__imageFallback {@extend %_productCard__imageFallback;}
+  &__caption {@extend %_productCard__caption;}
+  &__content {@extend %_productCard__content;}
+  &__title {@extend %_productCard__title;}
+  &__description {@extend %_productCard__description;}
+  &__variations {@extend %_productCard__variations;}
+  &__variationsLabel {@extend %_productCard__variationsLabel;}
+  &__variationsList {@extend %_productCard__variationsList;}
+  &__footer {@extend %_productCard__footer;}
+  &__pricing {@extend %_productCard__pricing;}
+  &__price {@extend %_productCard__price;}
+  &__actions {@extend %_productCard__actions;}
+  &__actionsButton {@extend %_productCard__actionsButton;}
+  &__actionsButton--primary {@extend %_productCard__actionsButton--primary;}
+  &__actionsButton--secondary {@extend %_productCard__actionsButton--secondary;}
+  &__cta {@extend %_productCard__cta;}
+  &--interactive {
+    @extend %_productCard--interactive;
+  }
+  &--admin {
+    @extend %_productCard--admin;
+  }
+}
 /************************************************************/
 /**************************FUNCTION**************************/
 /************************************************************/
 @function productCard(
   $params: $productCard
-  , $shadowIntensity: map-get($productCard, shadowIntensity)
+  , $shadowIntensity: map.get($productCard, shadowIntensity)
   // BEMFunctionParam
 ){
-  @return map-merge($productCard, (
+  @return map.merge($productCard, (
     shadowIntensity: $shadowIntensity
   ));
 }
+$productCard: ();
 
 /************************************************************/
 /**************************BLOC BEM**************************/
 /************************************************************/
 .productCard {
-  @extend %productCard;
+  @include productCard;
 
   // Modifiers
   &--featured {
-    border-color: #4299e1;
-  }
+    box-shadow: $shadow-xl;
 
-  // Elements
-  &__image {
-    @extend %productCard__image;
+    .productCard__surface::before {
+      opacity: 1;
+    }
   }
 
   // States

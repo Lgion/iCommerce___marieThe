@@ -1,0 +1,215 @@
+@use "sass:map";
+@use "../../utils/variables" as *;
+
+/************************************************************/
+/**************************PLACEHOLDER**************************/
+/************************************************************/
+%_productDetail {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+  display: grid;
+  gap: $L;
+  font-family: $contenus;
+  color: $gray-700;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: $S;
+    flex-wrap: wrap;
+  }
+
+  &__back {
+    border: none;
+    background: rgba($primary-color, 0.12);
+    color: $primary-color;
+    font-weight: 600;
+    padding: 0.6rem 1.2rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: $shadow-sm;
+      outline: none;
+    }
+  }
+
+  &__title {
+    font-family: $titres;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 700;
+    color: $gray-900;
+    margin: 0;
+  }
+
+  &__feedback {
+    flex-basis: 100%;
+    font-size: 0.95rem;
+    color: $success-color;
+    background: rgba($success-color, 0.12);
+    padding: 0.75rem 1rem;
+    border-radius: 0.85rem;
+  }
+
+  &__content {
+    display: grid;
+    gap: $L;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    align-items: start;
+  }
+
+  &__visual {
+    position: relative;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    background: rgba($gray-200, 0.4);
+    min-height: 320px;
+    box-shadow: $shadow-md;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  &__imageFallback {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    color: $gray-500;
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+  }
+
+  &__info {
+    display: grid;
+    gap: $S_;
+  }
+
+  &__description {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: $gray-600;
+  }
+
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $S;
+  }
+
+  &__price {
+    font-family: $titres;
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: $primary-color;
+  }
+
+  &__shop {
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    background: rgba($primary-color, 0.08);
+    color: $primary-color;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  &__variations {
+    padding: $S_;
+    border-radius: 1.1rem;
+    background: rgba($gray-100, 0.8);
+    border: 1px solid rgba($gray-200, 0.8);
+  }
+
+  &__variationsTitle {
+    font-family: $titres;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: $gray-800;
+    margin-bottom: 0.5rem;
+  }
+
+  &__variationsList {
+    font-size: 0.95rem;
+    color: $gray-600;
+    line-height: 1.7;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+/************************************************************/
+/**************************MIXIN**************************/
+/************************************************************/
+@mixin productDetail(
+  $paramMixi_: $productDetail
+  // BEMMixinParam
+){
+  $paramMixi: productDetail(map.merge($productDetail, $paramMixi_));
+
+  @extend %_productDetail;
+  &__header {@extend %_productDetail__header;}
+  &__back {@extend %_productDetail__back;}
+  &__title {@extend %_productDetail__title;}
+  &__feedback {@extend %_productDetail__feedback;}
+  &__content {@extend %_productDetail__content;}
+  &__visual {@extend %_productDetail__visual;}
+  &__image {@extend %_productDetail__image;}
+  &__imageFallback {@extend %_productDetail__imageFallback;}
+  &__info {@extend %_productDetail__info;}
+  &__description {@extend %_productDetail__description;}
+  &__meta {@extend %_productDetail__meta;}
+  &__price {@extend %_productDetail__price;}
+  &__shop {@extend %_productDetail__shop;}
+  &__variations {@extend %_productDetail__variations;}
+  &__variationsTitle {@extend %_productDetail__variationsTitle;}
+  &__variationsList {@extend %_productDetail__variationsList;}
+  &__footer {@extend %_productDetail__footer;}
+}
+
+/************************************************************/
+/**************************FUNCTION**************************/
+/************************************************************/
+@function productDetail(
+  $params: $productDetail
+  // BEMFunctionParam
+){
+  @return map.merge($productDetail, (
+  ));
+}
+$productDetail: ();
+
+/************************************************************/
+/**************************BLOC BEM**************************/
+/************************************************************/
+.productDetail {
+  @include productDetail;
+
+  &__header {@extend %_productDetail__header;}
+  &__back {@extend %_productDetail__back;}
+  &__title {@extend %_productDetail__title;}
+  &__feedback {@extend %_productDetail__feedback;}
+  &__content {@extend %_productDetail__content;}
+  &__visual {@extend %_productDetail__visual;}
+  &__image {@extend %_productDetail__image;}
+  &__imageFallback {@extend %_productDetail__imageFallback;}
+  &__info {@extend %_productDetail__info;}
+  &__description {@extend %_productDetail__description;}
+  &__meta {@extend %_productDetail__meta;}
+  &__price {@extend %_productDetail__price;}
+  &__shop {@extend %_productDetail__shop;}
+  &__variations {@extend %_productDetail__variations;}
+  &__variationsTitle {@extend %_productDetail__variationsTitle;}
+  &__variationsList {@extend %_productDetail__variationsList;}
+  &__footer {@extend %_productDetail__footer;}
+}

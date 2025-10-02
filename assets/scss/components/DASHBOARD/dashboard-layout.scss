@@ -1,0 +1,130 @@
+@import '../../utils/variables.scss';
+
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+  background: $dashboardBg;
+
+  &__sidebar {
+    width: $dashboardSidebarWidth;
+    background: $dashboardSidebarBg;
+    border-right: 1px solid $dashboardBorderColor;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 100;
+    transition: transform 0.3s ease;
+
+    &--collapsed {
+      transform: translateX(-100%);
+    }
+  }
+
+  &__main {
+    flex: 1;
+    margin-left: $dashboardSidebarWidth;
+    transition: margin-left 0.3s ease;
+
+    &--expanded {
+      margin-left: 0;
+    }
+  }
+
+  &__header {
+    height: $dashboardHeaderHeight;
+    background: $white;
+    border-bottom: 1px solid $dashboardBorderColor;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 $dashboardPadding;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  &__content {
+    padding: $dashboardPadding;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  &__breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: $S;
+    font-size: 14px;
+    color: $dashboardTextSecondary;
+
+    &-item {
+      display: flex;
+      align-items: center;
+      gap: $S;
+
+      &--active {
+        color: $dashboardTextPrimary;
+        font-weight: 500;
+      }
+    }
+
+    &-separator {
+      color: $dashboardTextMuted;
+    }
+  }
+
+  &__header-actions {
+    display: flex;
+    align-items: center;
+    gap: $M;
+  }
+
+  &__user-menu {
+    display: flex;
+    align-items: center;
+    gap: $S;
+    cursor: pointer;
+    padding: $S $S_;
+    border-radius: $dashboardRadiusSm;
+    transition: background 0.2s;
+
+    &:hover {
+      background: $dashboardHoverBg;
+    }
+  }
+
+  &__avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: $primary-color;
+    color: $white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .dashboard-layout {
+    &__sidebar {
+      transform: translateX(-100%);
+
+      &--open {
+        transform: translateX(0);
+      }
+    }
+
+    &__main {
+      margin-left: 0;
+    }
+
+    &__content {
+      padding: $S_;
+    }
+  }
+}

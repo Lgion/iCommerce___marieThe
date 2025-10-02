@@ -1,0 +1,149 @@
+@use "sass:map";
+@use "../../utils/variables" as *;
+
+/************************************************************/
+/**************************PLACEHOLDER**************************/
+/************************************************************/
+%_productActions {
+  display: inline-flex;
+  align-items: center;
+  gap: $S;
+  border-radius: 999px;
+  padding: 0.35rem 0.5rem;
+  background: rgba($gray-900, 0.65);
+  backdrop-filter: blur(10px);
+  box-shadow: $shadow-md;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+
+  &--overlay {
+    position: absolute;
+    top: $S;
+    right: $S;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-6px);
+  }
+
+  &--footer {
+    position: relative;
+    justify-content: flex-end;
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  &--detail {
+    justify-content: flex-end;
+    background: linear-gradient(135deg, rgba($gray-900, 0.08), rgba($gray-900, 0.16));
+    border-radius: $S_;
+    padding: $S;
+  }
+
+  &__button {
+    border: none;
+    border-radius: 999px;
+    padding: 0.45rem 0.9rem;
+    font-family: $titres;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $white;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+
+    &--edit {
+      background: linear-gradient(135deg, $primary-color 0%, $primary-hover 100%);
+    }
+
+    &--delete {
+      background: linear-gradient(135deg, $danger-color 0%, $danger-hover 100%);
+    }
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: $shadow-lg;
+      outline: none;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+  }
+}
+
+/************************************************************/
+/**************************MIXIN**************************/
+/************************************************************/
+@mixin productActions(
+  $paramMixi_: $productActions
+  // BEMMixinParam
+){
+  $paramMixi: productActions(map.merge($productActions, $paramMixi_));
+
+  @extend %_productActions;
+  &--overlay {
+    @extend %_productActions--overlay;
+  }
+  &--footer {
+    @extend %_productActions--footer;
+  }
+  &--detail {
+    @extend %_productActions--detail;
+  }
+  &__button {
+    @extend %_productActions__button;
+
+    &--edit {
+      @extend %_productActions__button--edit;
+    }
+
+    &--delete {
+      @extend %_productActions__button--delete;
+    }
+  }
+}
+
+/************************************************************/
+/**************************FUNCTION**************************/
+/************************************************************/
+@function productActions(
+  $params: $productActions
+  // BEMFunctionParam
+){
+  @return map.merge($productActions, (
+  ));
+}
+$productActions: ();
+
+/************************************************************/
+/**************************BLOC BEM**************************/
+/************************************************************/
+.productActions {
+  @include productActions;
+
+  &--overlay {
+    @extend %_productActions--overlay;
+  }
+
+  &--footer {
+    @extend %_productActions--footer;
+  }
+
+  &--detail {
+    @extend %_productActions--detail;
+  }
+
+  &__button {
+    @extend %_productActions__button;
+
+    &--edit {
+      @extend %_productActions__button--edit;
+    }
+
+    &--delete {
+      @extend %_productActions__button--delete;
+    }
+  }
+}

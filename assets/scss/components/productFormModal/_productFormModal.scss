@@ -1,0 +1,438 @@
+@use "sass:map";
+@use "sass:color";
+@use "../../utils/variables" as *;
+
+/************************************************************/
+/**************************PLACEHOLDER**************************/
+/************************************************************/
+%_productFormModal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba($gray-900, 0.45);
+  backdrop-filter: blur(10px);
+  padding: $L;
+  z-index: 999;
+  pointer-events: auto;
+
+  &__container {
+    position: absolute;
+    top:1em;
+    bottom:1em;
+    width: min(720px, 100%);
+    border-radius: 1.5rem;
+    background: linear-gradient(160deg, rgba($white, 0.98) 0%, rgba($gray-50, 0.93) 100%);
+    box-shadow: $shadow-xl;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__header {
+    position: relative;
+    padding: $L;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $S;
+    background: linear-gradient(135deg, rgba($primary-color, 0.15), rgba($primary-hover, 0.1));
+    box-shadow: 0 0 10px 1px black;
+  }
+
+  &__title {
+    font-family: $titres;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $gray-900;
+    margin: 0;
+  }
+
+  &__close {
+    border: none;
+    background: rgba($white, 0.6);
+    color: $gray-700;
+    font-size: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 999px;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: transform 0.2s ease, background 0.3s ease;
+
+    &:hover,
+    &:focus-visible {
+      background: rgba($primary-color, 0.15);
+      transform: rotate(90deg);
+      outline: none;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: $L;
+    height:80%;
+    overflow-y:scroll;
+    padding: 1em;
+  }
+
+  &__body {
+    padding: 0 $L;
+    display: grid;
+    gap: $L;
+  }
+
+  &__fields {
+    display: grid;
+    gap: $S_;
+  }
+
+  &__label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: $gray-700;
+  }
+
+  &__input,
+  &__textarea,
+  &__select {
+    width: 100%;
+    border-radius: 0.9rem;
+    border: 1px solid rgba($gray-300, 0.8);
+    padding: 0.75rem 1rem;
+    background: rgba($white, 0.96);
+    font-family: $contenus;
+    font-size: 0.95rem;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+
+    &:focus-visible {
+      border-color: $primary-color;
+      box-shadow: 0 0 0 3px rgba($primary-color, 0.18);
+      outline: none;
+    }
+  }
+
+  &__preview {
+    max-height: 300px;
+    overflow-y: scroll;
+    border:solid;
+    border-width:0 3px 3px;
+    box-shadow:0 5px 10px 1px;
+    border-radius: 0 0 5px 5px;
+    &Image {
+      width: 100%;
+    }
+  }
+
+  .cameraCapture {
+    position: relative;
+    width: 75%;
+    background: white;
+    padding: 2em;
+    border: solid;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 1px;
+    video{width:100%;}
+    &__overlay{}
+    &__modal{}
+    &__header{}
+    &__title{}
+    &__close{}
+    &__content{}
+    &__loading{}
+    &__spinner{}
+    &__error{}
+    &__retry{}
+    &__preview{}
+    &__video{}
+    &__viewfinder{}
+    &__captured{}
+    &__canvas{}
+    &__controls{}
+    &__switch{}
+    &__capture{}
+    &__cancel{}
+    &__retake{}
+    &__confirm{}
+  }
+  &__cameraButton {
+    margin-top: $S;
+    align-self: flex-start;
+    border: none;
+    border-radius: 999px;
+    padding: 0.5rem 1.25rem;
+    background: linear-gradient(135deg, $primary-hover 0%, $primary-color 100%);
+    color: $white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: $shadow-lg;
+      outline: none;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+  }
+
+  &__textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  &__variations {
+    display: flex;
+    flex-direction: column;
+    gap: $S;
+    padding: $S_;
+    border-radius: 1rem;
+    background: rgba($primary-color, 0.06);
+    border: 1px dashed rgba($primary-color, 0.2);
+  }
+
+  &__variationsHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $S;
+  }
+
+  &__sectionTitle {
+    font-family: $titres;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: $primary-color;
+    margin: 0;
+  }
+
+  &__add {
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(135deg, $success-color 0%, $success-hover 100%);
+    color: $white;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.55rem 1.1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: $shadow-md;
+      outline: none;
+    }
+  }
+
+  &__variationList,
+  &__options {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: $S;
+  }
+
+  &__variation {
+    padding: $S;
+    border-radius: 1rem;
+    background: rgba($white, 0.92);
+    box-shadow: $shadow-sm;
+    display: grid;
+    gap: $S;
+  }
+
+  &__variationHeader {
+    display: flex;
+    align-items: center;
+    gap: $S;
+  }
+
+  &__remove {
+    border: none;
+    border-radius: 999px;
+    padding: 0.45rem 0.9rem;
+    background: rgba($danger-color, 0.12);
+    color: $danger-color;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+
+    &:hover,
+    &:focus-visible {
+      background: $danger-color;
+      color: $white;
+      outline: none;
+    }
+  }
+
+  &__option {
+    display: flex;
+    align-items: center;
+    gap: $S;
+  }
+
+  &__remove--option {
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  &__add--option {
+    justify-self: flex-start;
+  }
+
+  &__footer {
+    position: absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    display: flex;
+    gap: $S;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    box-shadow: 0 0 10px 1px black;
+    background: white;
+  }
+
+  &__secondary,
+  &__primary {
+    border: none;
+    border-radius: 999px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  &__secondary {
+    background: rgba($gray-300, 0.4);
+    color: $gray-600;
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: $shadow-sm;
+      outline: none;
+    }
+  }
+
+  &__primary {
+    background: linear-gradient(135deg, $primary-color 0%, $primary-hover 100%);
+    color: $white;
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: $shadow-lg;
+      outline: none;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+  }
+}
+
+/************************************************************/
+/**************************MIXIN**************************/
+/************************************************************/
+@mixin productFormModal(
+  $paramMixi_: $productFormModal
+  // BEMMixinParam
+){
+  $paramMixi: productFormModal(map.merge($productFormModal, $paramMixi_));
+
+  @extend %_productFormModal;
+  &__container {@extend %_productFormModal__container;}
+  &__header {@extend %_productFormModal__header;}
+  &__title {@extend %_productFormModal__title;}
+  &__close {@extend %_productFormModal__close;}
+  &__form {@extend %_productFormModal__form;}
+  &__body {@extend %_productFormModal__body;}
+  &__fields {@extend %_productFormModal__fields;}
+  &__label {@extend %_productFormModal__label;}
+  &__input {@extend %_productFormModal__input;}
+  &__textarea {@extend %_productFormModal__textarea;}
+  &__select {@extend %_productFormModal__select;}
+  &__preview {@extend %_productFormModal__preview;}
+  &__previewImage {@extend %_productFormModal__previewImage;}
+  &__cameraButton {@extend %_productFormModal__cameraButton;}
+  &__variations {@extend %_productFormModal__variations;}
+  &__variationsHeader {@extend %_productFormModal__variationsHeader;}
+  &__sectionTitle {@extend %_productFormModal__sectionTitle;}
+  &__add {@extend %_productFormModal__add;}
+  &__variationList {@extend %_productFormModal__variationList;}
+  &__variation {@extend %_productFormModal__variation;}
+  &__variationHeader {@extend %_productFormModal__variationHeader;}
+  &__remove {@extend %_productFormModal__remove;}
+  &__options {@extend %_productFormModal__options;}
+  &__option {@extend %_productFormModal__option;}
+  &__remove--option {@extend %_productFormModal__remove--option;}
+  &__add--option {@extend %_productFormModal__add--option;}
+  &__footer {@extend %_productFormModal__footer;}
+  &__secondary {@extend %_productFormModal__secondary;}
+  &__primary {@extend %_productFormModal__primary;}
+}
+
+/************************************************************/
+/**************************FUNCTION**************************/
+/************************************************************/
+@function productFormModal(
+  $params: $productFormModal
+  // BEMFunctionParam
+){
+  @return map.merge($productFormModal, (
+  ));
+}
+$productFormModal: ();
+
+/************************************************************/
+/**************************BLOC BEM**************************/
+/************************************************************/
+.productFormModal {
+  @include productFormModal;
+
+  &__container {@extend %_productFormModal__container;}
+  &__header {@extend %_productFormModal__header;}
+  &__title {@extend %_productFormModal__title;}
+  &__close {@extend %_productFormModal__close;}
+  &__form {@extend %_productFormModal__form;}
+  &__body {@extend %_productFormModal__body;}
+  &__fields {@extend %_productFormModal__fields;}
+  &__label {@extend %_productFormModal__label;}
+  &__input {@extend %_productFormModal__input;}
+  &__textarea {@extend %_productFormModal__textarea;}
+  &__select {@extend %_productFormModal__select;}
+  &__variations {@extend %_productFormModal__variations;}
+  &__variationsHeader {@extend %_productFormModal__variationsHeader;}
+  &__sectionTitle {@extend %_productFormModal__sectionTitle;}
+  &__add {@extend %_productFormModal__add;}
+  &__variationList {@extend %_productFormModal__variationList;}
+  &__variation {@extend %_productFormModal__variation;}
+  &__variationHeader {@extend %_productFormModal__variationHeader;}
+  &__remove {@extend %_productFormModal__remove;}
+  &__options {@extend %_productFormModal__options;}
+  &__option {@extend %_productFormModal__option;}
+  &__remove--option {@extend %_productFormModal__remove--option;}
+  &__add--option {@extend %_productFormModal__add--option;}
+  &__footer {@extend %_productFormModal__footer;}
+  &__secondary {@extend %_productFormModal__secondary;}
+  &__primary {@extend %_productFormModal__primary;}
+}

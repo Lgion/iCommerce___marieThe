@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // Variables de thème
 $primary-color: #2c3e50;
 $secondary-color: #3498db;
@@ -15,27 +17,28 @@ $font-secondary: 'Poppins', sans-serif;
   min-height: 100vh;
   font-family: $font-primary;
   color: $text-color;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
 
   &__container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
   }
 
   &__video {
-    margin-bottom: 3rem;
     text-align: center;
-
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    aspect-ratio: 16/9;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: $shadow;
+    
     &-wrapper {
-      position: relative;
-      width: 100%;
-      max-width: 800px;
-      margin: 0 auto;
-      aspect-ratio: 16/9;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: $shadow;
     }
+
+    // toolbar styles removed from video; they belong to services
 
     iframe {
       width: 100%;
@@ -63,7 +66,7 @@ $font-secondary: 'Poppins', sans-serif;
     }
 
     &-info {
-      flex: 1;
+      // flex: 1;
 
       &-name {
         font-family: $font-secondary;
@@ -71,6 +74,30 @@ $font-secondary: 'Poppins', sans-serif;
         font-weight: 600;
         color: $primary-color;
         margin: 0 0 0.5rem 0;
+      }
+
+      &-actions {
+        display: flex;
+        gap: .5rem;
+        justify-content: flex-end;
+        margin-bottom: .5rem;
+      }
+
+      &-action {
+        width: 32px;
+        height: 32px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid $border-color;
+        border-radius: 6px;
+        background: #fff;
+        cursor: pointer;
+        transition: background .2s ease, transform .2s ease, border-color .2s ease;
+
+        &:hover { background: $light-bg; transform: translateY(-1px); border-color: $secondary-color; }
+
+        &--delete { color: $accent-color; }
       }
 
       &-pseudo {
@@ -123,7 +150,7 @@ $font-secondary: 'Poppins', sans-serif;
         color: white;
 
         &:hover {
-          background: darken($secondary-color, 10%);
+          background: color.adjust($secondary-color, $lightness: 10%);
           transform: translateY(-2px);
         }
       }
@@ -148,8 +175,32 @@ $font-secondary: 'Poppins', sans-serif;
       font-family: $font-secondary;
       font-size: 2rem;
       color: $primary-color;
-      text-align: center;
-      margin-bottom: 2rem;
+      text-align: left;
+      margin: 0;
+    }
+
+    &-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    &-add {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      border: none;
+      background: $secondary-color;
+      color: #fff;
+      font-weight: 700;
+      box-shadow: $shadow;
+      cursor: pointer;
+      transition: transform .2s ease, background .2s ease;
+
+      &:hover { background: color.adjust($secondary-color, $lightness: 10%); transform: translateY(-1px); }
+      &:active { transform: translateY(0); }
     }
 
     &-grid {
@@ -218,8 +269,29 @@ $font-secondary: 'Poppins', sans-serif;
           cursor: pointer;
           display: inline-block;
 
+          &-link { color: #fff; text-decoration: none; }
+
+          &-actions {
+            display: inline-flex;
+            gap: .25rem;
+            margin-left: .5rem;
+          }
+
+          &-action {
+            width: 22px;
+            height: 22px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255,255,255,.2);
+            color: #fff;
+            cursor: pointer;
+            transition: background .2s ease;
+
+            &:hover { background: rgba(255,255,255,.35); }
+          }
+
           &:hover {
-            background: darken($secondary-color, 10%);
+            background: color.adjust($secondary-color, $lightness: 10%);
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
           }
@@ -227,6 +299,19 @@ $font-secondary: 'Poppins', sans-serif;
           &:active {
             transform: translateY(0);
           }
+        }
+
+        &-add {
+          width: 34px;
+          height: 34px;
+          border-radius: 50%;
+          border: 1px dashed $secondary-color;
+          background: #fff;
+          color: $secondary-color;
+          cursor: pointer;
+          transition: background .2s ease, transform .2s ease;
+
+          &:hover { background: $light-bg; transform: translateY(-1px); }
         }
       }
     }
@@ -307,8 +392,11 @@ $font-secondary: 'Poppins', sans-serif;
     z-index: 1000;
 
     &:hover {
-      background: darken($accent-color, 10%);
+      background: color.adjust($accent-color, $lightness: 10%);
       transform: scale(1.1);
+    }
+    &--add{
+      bottom: 6em;
     }
   }
 }
@@ -443,7 +531,7 @@ $font-secondary: 'Poppins', sans-serif;
       color: white;
 
       &:hover {
-        background: darken($secondary-color, 10%);
+        background: color.adjust($secondary-color, $lightness: 10%);
         transform: translateY(-1px);
       }
     }

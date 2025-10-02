@@ -1,0 +1,351 @@
+@import '../../utils/variables.scss';
+
+.data-table {
+  background: $dashboardCardBg;
+  border-radius: $dashboardRadiusLg;
+  box-shadow: $shadow-sm;
+  border: 1px solid $dashboardBorderColor;
+  overflow: hidden;
+
+  &__header {
+    padding: $M;
+    border-bottom: 1px solid $dashboardBorderColor;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: $S_;
+  }
+
+  &__title {
+    font-size: 18px;
+    font-weight: 600;
+    color: $dashboardTextPrimary;
+  }
+
+  &__actions {
+    display: flex;
+    gap: $S;
+    align-items: center;
+  }
+
+  &__search {
+    position: relative;
+
+    &-input {
+      padding: $S $S_ $S $L;
+      border: 1px solid $dashboardBorderColor;
+      border-radius: $dashboardRadiusSm;
+      font-size: 14px;
+      min-width: 250px;
+      transition: all 0.2s;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+        box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+      }
+    }
+
+    &-icon {
+      position: absolute;
+      left: $S;
+      top: 50%;
+      transform: translateY(-50%);
+      color: $dashboardTextMuted;
+    }
+  }
+
+  &__filter {
+    padding: $S $S_;
+    border: 1px solid $dashboardBorderColor;
+    border-radius: $dashboardRadiusSm;
+    background: $white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      border-color: $primary-color;
+    }
+  }
+
+  &__container {
+    overflow-x: auto;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  &__thead {
+    background: $gray-50;
+    border-bottom: 1px solid $dashboardBorderColor;
+  }
+
+  &__th {
+    padding: $S_ $M;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    color: $dashboardTextSecondary;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+
+    &--sortable {
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.2s;
+
+      &:hover {
+        color: $dashboardTextPrimary;
+      }
+    }
+
+    &--sorted {
+      color: $primary-color;
+    }
+  }
+
+  &__sort-icon {
+    margin-left: $XS;
+    font-size: 10px;
+  }
+
+  &__tbody {
+    tr {
+      border-bottom: 1px solid $dashboardBorderColor;
+      transition: background 0.2s;
+
+      &:hover {
+        background: $gray-50;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  &__td {
+    padding: $S_ $M;
+    font-size: 14px;
+    color: $dashboardTextPrimary;
+    vertical-align: middle;
+
+    &--actions {
+      text-align: right;
+    }
+
+    &--center {
+      text-align: center;
+    }
+
+    &--right {
+      text-align: right;
+    }
+  }
+
+  &__cell {
+    &-primary {
+      font-weight: 600;
+      color: $dashboardTextPrimary;
+    }
+
+    &-secondary {
+      font-size: 13px;
+      color: $dashboardTextSecondary;
+      margin-top: 2px;
+    }
+
+    &-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    &-user {
+      display: flex;
+      align-items: center;
+      gap: $S;
+    }
+  }
+
+  &__badge {
+    display: inline-block;
+    padding: 4px $S;
+    border-radius: $dashboardRadiusSm;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+
+    &--success {
+      background: rgba($success-color, 0.1);
+      color: $success-color;
+    }
+
+    &--warning {
+      background: rgba($statCustomersColor, 0.1);
+      color: $statCustomersColor;
+    }
+
+    &--danger {
+      background: rgba($danger-color, 0.1);
+      color: $danger-color;
+    }
+
+    &--info {
+      background: rgba($primary-color, 0.1);
+      color: $primary-color;
+    }
+
+    &--neutral {
+      background: $gray-100;
+      color: $dashboardTextSecondary;
+    }
+  }
+
+  &__actions-menu {
+    display: flex;
+    gap: $S;
+    justify-content: flex-end;
+  }
+
+  &__action-btn {
+    padding: $XS $S;
+    border: none;
+    background: transparent;
+    color: $dashboardTextSecondary;
+    cursor: pointer;
+    border-radius: $dashboardRadiusSm;
+    transition: all 0.2s;
+    font-size: 16px;
+
+    &:hover {
+      background: $dashboardHoverBg;
+      color: $dashboardTextPrimary;
+    }
+
+    &--edit:hover {
+      color: $primary-color;
+      background: rgba($primary-color, 0.1);
+    }
+
+    &--delete:hover {
+      color: $danger-color;
+      background: rgba($danger-color, 0.1);
+    }
+
+    &--view:hover {
+      color: $statBookingsColor;
+      background: rgba($statBookingsColor, 0.1);
+    }
+  }
+
+  &__footer {
+    padding: $M;
+    border-top: 1px solid $dashboardBorderColor;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: $S_;
+  }
+
+  &__pagination {
+    display: flex;
+    gap: $XS;
+    align-items: center;
+  }
+
+  &__page-btn {
+    padding: $S $S_;
+    border: 1px solid $dashboardBorderColor;
+    background: $white;
+    color: $dashboardTextPrimary;
+    cursor: pointer;
+    border-radius: $dashboardRadiusSm;
+    font-size: 14px;
+    transition: all 0.2s;
+    min-width: 36px;
+    text-align: center;
+
+    &:hover:not(&--disabled) {
+      border-color: $primary-color;
+      color: $primary-color;
+    }
+
+    &--active {
+      background: $primary-color;
+      color: $white;
+      border-color: $primary-color;
+    }
+
+    &--disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  &__info {
+    font-size: 14px;
+    color: $dashboardTextSecondary;
+  }
+
+  &__empty {
+    padding: $XL;
+    text-align: center;
+    color: $dashboardTextMuted;
+
+    &-icon {
+      font-size: 48px;
+      margin-bottom: $M;
+      opacity: 0.5;
+    }
+
+    &-text {
+      font-size: 16px;
+      margin-bottom: $S;
+    }
+
+    &-subtext {
+      font-size: 14px;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .data-table {
+    &__header {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    &__search-input {
+      min-width: 100%;
+    }
+
+    &__actions {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    &__footer {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    &__pagination {
+      justify-content: center;
+    }
+
+    &__info {
+      text-align: center;
+    }
+  }
+}

@@ -1,0 +1,299 @@
+@use 'sass:map';
+
+$bookingAdminTheme: (
+  fontPrimary: 'Inter, "Segoe UI", sans-serif',
+  fontSecondary: 'Playfair Display, "Times New Roman", serif',
+  background: rgba(15, 23, 42, 0.92),
+  surface: rgba(15, 23, 42, 0.98),
+  accent: linear-gradient(135deg, #38bdf8 0%, #6366f1 100%),
+  accentSolid: #38bdf8,
+  accentAlt: #f97316,
+  border: rgba(148, 163, 184, 0.32),
+  textPrimary: #e2e8f0,
+  textSecondary: #94a3b8,
+  shadow: 0 28px 65px rgba(15, 23, 42, 0.45),
+  radius: 24px,
+  gap: 1.6rem,
+  focus: 0 0 0 3px rgba(99, 102, 241, 0.35)
+);
+
+@function bookingAdmin($overrides: ()) {
+  @return map.merge($bookingAdminTheme, $overrides);
+}
+
+%bookingAdmin {
+  font-family: map.get($bookingAdminTheme, fontPrimary);
+  color: map.get($bookingAdminTheme, textPrimary);
+}
+
+%morphButton {
+  align-items: center;
+  background: map.get($bookingAdminTheme, accent);
+  border: 0;
+  border-radius: calc(map.get($bookingAdminTheme, radius) / 2);
+  color: #0f172a;
+  display: inline-flex;
+  font-family: map.get($bookingAdminTheme, fontPrimary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  gap: 0.75rem;
+  justify-content: center;
+  line-height: 1;
+  padding: 0.85rem 1.6rem;
+  position: relative;
+  text-decoration: none;
+  transition: transform 0.24s ease, box-shadow 0.24s ease;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 35px rgba(56, 189, 248, 0.35);
+  }
+  &:focus-visible {
+    outline: none;
+    box-shadow: map.get($bookingAdminTheme, focus);
+  }
+}
+
+@mixin bookingAdmin($params: $bookingAdminTheme) {
+  $theme: bookingAdmin($params);
+  @extend %bookingAdmin;
+  // backdrop-filter: blur(24px);
+  background: map.get($theme, background);
+  border-radius: map.get($theme, radius);
+  box-shadow: map.get($theme, shadow);
+  display: flex;
+  flex-direction: column;
+  gap: map.get($theme, gap);
+  width: 100%;
+  padding: 2.4rem;
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+
+  &__overlay {
+    backdrop-filter: blur(4px);
+    background: rgba(8, 12, 24, 0.55);
+    inset: 0;
+    position: fixed;
+    z-index: 96;
+  }
+
+  &__dialog {
+    align-self: center;
+    background: map.get($theme, surface);
+    border: 1px solid map.get($theme, border);
+    border-radius: map.get($theme, radius);
+    display: flex;
+    flex-direction: column;
+    gap: map.get($theme, gap);
+    margin: auto;
+    max-height: calc(100vh - 12vh);
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+    width: min(90vw, 720px);
+  }
+
+  &__header {
+    align-items: center;
+    border-bottom: 1px solid map.get($theme, border);
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    padding: 1.8rem 2rem 1.2rem;
+  }
+
+  &__title {
+    font-family: map.get($theme, fontSecondary);
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    margin: 0;
+  }
+
+  &__subtitle {
+    color: map.get($theme, textSecondary);
+    font-size: 0.9rem;
+    margin: 0.35rem 0 0;
+  }
+
+  &__close {
+    @extend %morphButton;
+    background: transparent;
+    border: 1px solid map.get($theme, border);
+    color: map.get($theme, textSecondary);
+    font-size: 1.1rem;
+    padding: 0.6rem 0.8rem;
+  }
+
+  &__tabs {
+    border-bottom: 1px solid map.get($theme, border);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  &__tab {
+    background: transparent;
+    border: 0;
+    color: map.get($theme, textSecondary);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 1rem 1.2rem;
+    text-transform: uppercase;
+    transition: color 0.2s ease, background 0.2s ease;
+    &[aria-selected='true'] {
+      background: rgba(56, 189, 248, 0.12);
+      color: map.get($theme, textPrimary);
+    }
+    &:focus-visible {
+      outline: none;
+      box-shadow: map.get($theme, focus);
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: map.get($theme, gap);
+    padding: 1.8rem 2rem 2.4rem;
+    overflow-y: auto;
+  }
+
+  &__form {
+    display: grid;
+    gap: 1.2rem;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    label {
+      color: map.get($theme, textSecondary);
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    input,
+    select,
+    textarea {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid map.get($theme, border);
+      border-radius: 12px;
+      color: map.get($theme, textPrimary);
+      font-family: map.get($theme, fontPrimary);
+      font-size: 0.95rem;
+      padding: 0.85rem 1rem;
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+      &:focus-visible {
+        border-color: map.get($theme, accentSolid);
+        box-shadow: map.get($theme, focus);
+        outline: none;
+      }
+    }
+  }
+
+  &__weekday-selector {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0.2rem 0;
+  }
+
+  &__weekday {
+    @extend %morphButton;
+    background: rgba(56, 189, 248, 0.12);
+    border-radius: 12px;
+    color: map.get($theme, textSecondary);
+    font-size: 0.85rem;
+    padding: 0.55rem 0.9rem;
+    &[aria-pressed='true'] {
+      background: map.get($theme, accent);
+      color: #0f172a;
+      box-shadow: 0 16px 30px rgba(56, 189, 248, 0.3);
+    }
+  }
+
+  &__actions {
+    border-top: 1px solid map.get($theme, border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: flex-end;
+    padding: 1.4rem 2rem;
+  }
+
+  &__cta {
+    @extend %morphButton;
+    background: map.get($theme, accent);
+    color: #0f172a;
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.45;
+      transform: none;
+    }
+  }
+
+  &__secondary {
+    @extend %morphButton;
+    background: rgba(148, 163, 184, 0.12);
+    color: map.get($theme, textSecondary);
+  }
+
+  &__hint {
+    color: map.get($theme, textSecondary);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 0.4rem 0 0;
+  }
+
+  &__slots-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  &__slot-row {
+    align-items: center;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid map.get($theme, border);
+    border-radius: 14px;
+    display: grid;
+    gap: 0.8rem;
+    grid-template-columns: minmax(0, 1fr) 120px;
+    padding: 0.85rem 1rem;
+  }
+
+  &__remove {
+    @extend %morphButton;
+    background: rgba(248, 113, 113, 0.18);
+    color: #fecaca;
+    font-size: 0.85rem;
+    padding: 0.55rem 0.9rem;
+  }
+}
+
+.bookingAdmin {
+  @include bookingAdmin();
+}
+
+.bookingPage {
+  &__admin-bar {
+    align-items: center;
+    display: flex;
+    gap: 0.75rem;
+    justify-content: space-around;
+    margin: 0 0 1rem;
+  }
+
+  &__admin-button {
+    @extend %morphButton;
+    &--slots {
+      background: map.get($bookingAdminTheme, accent);
+      color: #0f172a;
+    }
+  }
+}
