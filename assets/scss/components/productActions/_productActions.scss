@@ -26,10 +26,30 @@
 
   &--footer {
     position: relative;
-    justify-content: flex-end;
-    background: transparent;
+    justify-content: center;
+    background: transparent !important;
     box-shadow: none;
     padding: 0;
+    margin-top: -0.25rem;
+    width: 100%;
+    gap: 1.5rem;
+    border-top: none;
+
+    .productActions__button {
+      background: transparent !important;
+      color: #3b2814 !important;
+      box-shadow: none !important;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-decoration: none;
+      
+      &:hover {
+        color: #000 !important;
+        transform: none;
+      }
+    }
   }
 
   &--detail {

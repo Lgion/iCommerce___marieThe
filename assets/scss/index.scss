@@ -1,22 +1,22 @@
 // Configuration et utilitaires
-@import './config/variables';
-@import './config/mixins';
+@use './config/variables';
+@use './config/mixins';
 
 // Base et reset
-@import './base/reset';
-@import './base/typography';
+@use './base/reset';
+@use './base/typography';
 
 // Composants
-@import 'components/productsPage/productsPage';
-@import 'components/productCard/productCard';
-@import 'components/cart/cartPage';
+@use 'components/productsPage/productsPage';
+@use 'components/productCard/productCard';
+@use 'components/cart/cartPage';
 
 // Layout
-@import './layout/header';
-@import './layout/footer';
+@use './layout/header';
+@use './layout/footer';
 
 // Pages
-@import './pages/home';
+@use './pages/home';
 
 // Utilitaires
-@import './utilities/helpers';
+@use './utilities/helpers';

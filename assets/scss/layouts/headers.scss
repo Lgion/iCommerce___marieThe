@@ -1,1 +1,66 @@
-/**/
+@use "../utils/variables" as *;
+
+.headerBlock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 3rem;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+
+  &__home {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #4a3319;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: opacity 0.3s ease;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &__log {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  &__logBtn {
+    background: transparent;
+    border: 2px solid #a57c52;
+    color: #a57c52;
+    padding: 0.6rem 1.5rem;
+    border-radius: 999px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: #a57c52;
+      color: white;
+      box-shadow: 0 4px 12px rgba(165, 124, 82, 0.3);
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .headerBlock {
+    padding: 1rem 1.5rem;
+    
+    &__home {
+      font-size: 1.5rem;
+    }
+  }
+}

@@ -6,8 +6,6 @@ import { memo, useMemo } from 'react';
 import ProductActions from '@/components/ProductActions';
 // import { DEFAULT_PRODUCT_IMAGE } from '@/lib/cloudinaryDefaults';
 
-import '@/assets/scss/components/productCard/_productCard.scss';
-
 type VariationOption = {
   id: string;
   value: string;
@@ -48,7 +46,7 @@ function formatPrice(price?: number) {
   }
   return new Intl.NumberFormat('fr-FR', {
     style: 'currency',
-    currency: 'EUR'
+    currency: 'XOF'
   }).format(price);
 }
 
@@ -114,10 +112,10 @@ const ProductCard = memo(function ProductCard({
         >
           <figure className="productCard__image" itemProp="image">
             <Image src={imageSrc} alt={imageAlt} width={480} height={320} loading="lazy" />
-            <figcaption className="productCard__caption" itemProp="brand">
-              {product?.shop?.name || 'Boutique iCommerce'}
-            </figcaption>
           </figure>
+          <div className="productCard__caption" itemProp="brand">
+            {product?.shop?.name || 'Artisanat Local'}
+          </div>
           {isAdmin && (onEdit || onDelete) ? (
             <ProductActions
               variant="overlay"
@@ -145,10 +143,10 @@ const ProductCard = memo(function ProductCard({
 
         <footer className="productCard__footer">
           <div className="productCard__pricing" itemProp="offers" itemScope itemType="https://schema.org/Offer">
-            <span className="productCard__price" itemProp="price" data-currency="EUR">
+            <span className="productCard__price" itemProp="price" data-currency="F CFA">
               {priceLabel}
             </span>
-            <meta itemProp="priceCurrency" content="EUR" />
+            <meta itemProp="priceCurrency" content="CFA" />
           </div>
 
           <div className="productCard__actions" role="group" aria-label={`Actions pour ${product?.title}`}>

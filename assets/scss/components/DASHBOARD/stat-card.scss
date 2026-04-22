@@ -1,4 +1,4 @@
-@import '../../utils/variables.scss';
+@use '../../utils/variables' as *;
 
 .stat-card {
   background: $dashboardCardBg;

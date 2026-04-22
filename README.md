@@ -26,6 +26,11 @@ je veux un schema Config permettant de configurer divers chose pour l'applicatio
         - gestion des shops et de leurs détails (description services, ..etc)
 Sur la page d'accueil du dashboard, pour l'instant il ne devra s'afficher que l'historique des connexion au dashboard (il faut certainement prévoir un modele prisma pour gérer xa)
 
+- il faut que le tableau/calendar affiche les heure de 00h00 à 23h59 (de minuit à minuit quoi)
+    + => cela entraine qu'il faut que l'utilisateur puisse zoomer et dézoomer (mais à vérifier si c'est bien nécessaire, et plus important encore, si c'est facilement faisable)
+- il faut qu'il soit possible de naviguer dans le calendar horizontalement, donc dans les jour/mois (pour l'instant c'est possible avec les flèches, donc je ne sais pas si c'est vraiment pertinent, en tout cas c'est ainsi que italki fait)
+
+
 
 
 

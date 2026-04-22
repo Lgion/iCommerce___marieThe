@@ -1,10 +1,10 @@
-'use client';
-import { useState } from 'react';
+import { useGlobal } from '@/utils/GlobalProvider';
 import useCloudinaryUpload from '@/components/hooks/useCloudinaryUpload';
 
-export default ({currentServiceDetails,setShowAdminModal,editForm,handleFormChange,handleSaveChanges}) => {
+export default () => {
+  const { currentServiceDetails, setShowAdminModal, editForm, handleFormChange, handleServiceDetailsSave } = useGlobal();
   const { uploading, uploadToCloudinary } = useCloudinaryUpload();
-  const [localEditForm, setLocalEditForm] = useState(editForm);
+
 
   const handleImageUpload = async (e) => {
     const file = e.target.files?.[0];
@@ -143,7 +143,7 @@ export default ({currentServiceDetails,setShowAdminModal,editForm,handleFormChan
             <button
                 type="button"
                 className="admin-form__button admin-form__button--primary"
-                onClick={handleSaveChanges}
+                onClick={handleServiceDetailsSave}
             >
                 Sauvegarder
             </button>

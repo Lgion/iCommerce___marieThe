@@ -654,6 +654,46 @@ export default function GlobalProvider({ children }) {
     }
   }, []);
 
+  const handleFormChange = useCallback((e) => {
+    const { name, value } = e.target;
+    setEditForm((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  }, []);
+
+  const handleServiceDetailsSave = useCallback(async () => {
+    try {
+      const method = serviceDetails ? 'PUT' : 'POST';
+      const body = serviceDetails
+        ? { ...editForm, id: serviceDetails.id }
+        : { ...editForm, userId: dbUser?.id || user?.id };
+
+      const response = await fetch('/api/service-details', {
+        method,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      });
+
+      if (response.ok) {
+        const updatedDetails = await response.json();
+        setServiceDetails(updatedDetails);
+        storageManager.writeJSON('serviceDetails', updatedDetails);
+        setShowAdminModal(false);
+        // Recharger ou mettre à jour localement
+        // window.location.reload(); 
+      } else {
+        console.error('Erreur lors de la sauvegarde');
+        alert('Erreur lors de la sauvegarde des modifications');
+      }
+    } catch (error) {
+      console.error('Erreur:', error);
+      alert('Erreur lors de la sauvegarde des modifications');
+    }
+  }, [serviceDetails, editForm, dbUser?.id, user?.id]);
+
   const loadServiceBookinData = useCallback(async () => {
     if (!serviceId) {
       return null;
@@ -841,6 +881,9 @@ export default function GlobalProvider({ children }) {
     return storageManager.DEFAULT_SHOP_ID;
   }, [service?.shopId, shops, dbUser?.shopId, allowedShopIds, activeShopId]);
 
+  useEffect(() => {
+    localStorage.clear()
+  },[])
   useEffect(() => {
     const targetShopId = resolvePreferredShopId();
     if (!targetShopId) {
@@ -1080,6 +1123,7 @@ export default function GlobalProvider({ children }) {
     showServiceModal, setShowServiceModal,
     isAdmin, setIsAdmin, 
     loadServiceData, 
+    handleFormChange, handleServiceDetailsSave,
     currentServiceDetails, 
     products, productsLoaded, productsLoading, isProductMutating,
     shops, shopsLoaded, shopsLoading,

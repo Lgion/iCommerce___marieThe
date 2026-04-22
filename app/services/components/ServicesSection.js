@@ -5,23 +5,25 @@ import Link from 'next/link';
 import Image from 'next/image';
 import ServiceFormModal from './ServiceFormModal';
 import { DEFAULT_SERVICE_CARD_IMAGE } from '@/lib/cloudinaryDefaults';
+import { useGlobal } from "@/utils/GlobalProvider";
 
 /* Services offerts */
-export default function ServicesSection({
-  services,
-  formatPrice,
-  isAdmin = false,
-  serviceCategories = [],
-  isServiceMutating = false,
-  createService,
-  updateService,
-  deleteService,
-  createDuration,
-  updateDuration,
-  deleteDuration,
-  showServiceModal = false,
-  setShowServiceModal = () => {}
-}) {
+export default function ServicesSection({ formatPrice }) {
+  const {
+    services,
+    isAdmin,
+    serviceCategories,
+    isServiceMutating,
+    createService,
+    updateService,
+    deleteService,
+    createDuration,
+    updateDuration,
+    deleteDuration,
+    showServiceModal,
+    setShowServiceModal
+  } = useGlobal();
+
   const [pendingServiceId, setPendingServiceId] = useState(null);
 
   const handleCreateService = () => setShowServiceModal(true);

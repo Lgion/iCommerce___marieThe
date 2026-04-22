@@ -1,13 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import ProductCard from '@/components/ProductCard';
 import ProductFormModal from '@/app/products/components/ProductFormModal';
 import { useGlobal } from '@/utils/GlobalProvider';
-
-import '@/assets/scss/components/productsPage/_productsPage.scss';
 
 const defaultModalState = {
   isOpen: false,
@@ -40,6 +38,26 @@ export default function ProductsBlock(props = {}) {
 
   const [modalState, setModalState] = useState(defaultModalState);
   const [feedbackMessage, setFeedbackMessage] = useState(() => null);
+  const [isCartShaking, setIsCartShaking] = useState(false);
+  const cartShakeTimeoutRef = useRef(null);
+
+  const cartQuantity = cartTotals?.totalQuantity ?? 0;
+
+  const clearCartShakeTimeout = () => {
+    if (cartShakeTimeoutRef.current) {
+      clearTimeout(cartShakeTimeoutRef.current);
+      cartShakeTimeoutRef.current = null;
+    }
+  };
+
+  const triggerCartShake = () => {
+    setIsCartShaking(true);
+    clearCartShakeTimeout();
+    cartShakeTimeoutRef.current = setTimeout(() => {
+      setIsCartShaking(false);
+      cartShakeTimeoutRef.current = null;
+    }, 600);
+  };
 
   useEffect(() => {
     if (!shopsLoaded) {
@@ -60,6 +78,10 @@ export default function ProductsBlock(props = {}) {
       document.body.style.pointerEvents = '';
     };
   }, [modalState.isOpen]);
+
+  useEffect(() => () => {
+    clearCartShakeTimeout();
+  }, []);
 
   const sortedProducts = useMemo(() => {
     return [...products].sort((a, b) => a.title.localeCompare(b.title));
@@ -94,9 +116,10 @@ export default function ProductsBlock(props = {}) {
       const quantityLabel = nextQuantity > 1 ? `${nextQuantity} articles` : `${nextQuantity} article`;
       const formattedPrice = new Intl.NumberFormat('fr-FR', {
         style: 'currency',
-        currency: 'EUR'
+        currency: 'XOF'
       }).format(product.price ?? 0);
       setFeedbackMessage(`"${product.title}" ajouté au panier (${formattedPrice} • ${quantityLabel}).`);
+      triggerCartShake();
     } catch (error) {
       setFeedbackMessage(error?.message || 'Impossible d\'ajouter ce produit au panier.');
     }
@@ -219,11 +242,12 @@ export default function ProductsBlock(props = {}) {
         {showCartButton ? (
           <Link
             href={cartHref}
-            className="productsPage__cart"
+            className={`productsPage__cart${isCartShaking ? ' productsPage__cart--shake' : ''}`}
             title="Ouvrir le panier"
-            aria-label="Ouvrir le panier"
+            aria-label={`Ouvrir le panier (${cartQuantity} article${cartQuantity > 1 ? 's' : ''})`}
           >
-            🛒
+            <span className="productsPage__cartIcon" aria-hidden="true">🛒</span>
+            <span className="productsPage__cartBadge" aria-live="polite">{cartQuantity}</span>
           </Link>
         ) : null}
 

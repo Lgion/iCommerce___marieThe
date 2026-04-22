@@ -19,7 +19,7 @@ export default function Home() {
   useEffect(() => {
     checkAppConfiguration();
   }, [isLoaded, user]);
-  
+
   // Mettre à jour l'onglet actif selon le type d'app
   useEffect(() => {
     if (appConfig?.exists && appConfig.appType) {
@@ -93,42 +93,44 @@ export default function Home() {
   if (appConfig?.exists) {
     return (
       <>
-        <nav className={styles.header}>
-          <h1>{appConfig.user.serviceDetails?.pseudo || 'Bienvenue'}</h1>
-          
-          {appConfig.user.serviceDetails?.slogan && (
-            <p className={styles.slogan}>{appConfig.user.serviceDetails.slogan}</p>
-          )}
-        
-          {/* Onglets de navigation */}
-          {appType === 'BOTH' && (
-            <div className={styles.tabsPlaceholder} aria-hidden="true" />
-          )}
-        </nav>
+        {activeTab === 'services' && (
+          <nav className={styles.header + " serviceTitreNav"}>
+            <h1>{appConfig.user.serviceDetails?.pseudo || 'Bienvenue'}</h1>
+
+            {appConfig.user.serviceDetails?.slogan && (
+              <p className={styles.slogan}>{appConfig.user.serviceDetails.slogan}</p>
+            )}
+
+            {/* Onglets de navigation */}
+            {appType === 'BOTH' && (
+              <div className={styles.tabsPlaceholder} aria-hidden="true" />
+            )}
+          </nav>
+        )}
 
         {/* Contenu en fonction de l'onglet actif */}
-          {appType === 'ECOMMERCE' && (
-            <>
+        {appType === 'ECOMMERCE' && (
+          <>
+            <ProductsBlock
+            />
+          </>
+        )}
+
+        {appType === 'SERVICES' && (
+          <Services />
+        )}
+
+        {appType === 'BOTH' && (
+          <>
+            {activeTab === 'products' && (
               <ProductsBlock
               />
-            </>
-          )}
-          
-          {appType === 'SERVICES' && (
-            <Services />
-          )}
-          
-          {appType === 'BOTH' && (
-            <>
-              {activeTab === 'products' && (
-                <ProductsBlock
-                />
-              )}
-              {activeTab === 'services' && (
-                <Services />
-              )}
-            </>
-          )}
+            )}
+            {activeTab === 'services' && (
+              <Services />
+            )}
+          </>
+        )}
 
         {appType === 'BOTH' ? (
           <div className="productsPage__switchControl">

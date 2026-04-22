@@ -2,8 +2,6 @@
 
 import type { MouseEvent } from 'react';
 
-import '@/assets/scss/components/productActions/_productActions.scss';
-
 type ProductActionsVariant = 'overlay' | 'footer' | 'detail';
 
 type ProductActionsProps = {

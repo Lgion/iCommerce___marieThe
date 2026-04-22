@@ -131,8 +131,8 @@ export default function CartPage() {
   }, [clearCart]);
 
   const handleCheckout = useCallback(() => {
-    setFeedbackMessage('Le passage en caisse sera disponible prochainement.');
-  }, []);
+    triggerNavigation('/checkout');
+  }, [triggerNavigation]);
 
   return (
     <main

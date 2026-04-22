@@ -1,17 +1,18 @@
 @use "sass:color";
 
 // Variables de thème
-$primary-color: #2c3e50;
-$secondary-color: #3498db;
+$primary-color: #5c4033; // Deep brown
+$secondary-color: #a57c52; // Warm light brown
 $accent-color: #e74c3c;
 $text-color: #333;
-$light-bg: #f8f9fa;
-$border-color: #dee2e6;
-$shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+$light-bg: rgba(255, 255, 255, 0.6); // slight transparency for pearls
+$border-color: #e0d8c8;
+$shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 
 // Polices
 $font-primary: 'Inter', sans-serif;
 $font-secondary: 'Poppins', sans-serif;
+$font-elegant: 'Dancing Script', cursive; // Script font from mockup
 
 .services-page {
   min-height: 100vh;
@@ -21,8 +22,18 @@ $font-secondary: 'Poppins', sans-serif;
   margin: 0 auto;
   padding: 2rem;
 
-  &__container {
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background: url('/images/pearl_bg.png') center center / contain;
   }
+
+  &__container {}
 
   &__video {
     text-align: center;
@@ -34,9 +45,8 @@ $font-secondary: 'Poppins', sans-serif;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: $shadow;
-    
-    &-wrapper {
-    }
+
+    &-wrapper {}
 
     // toolbar styles removed from video; they belong to services
 
@@ -69,11 +79,12 @@ $font-secondary: 'Poppins', sans-serif;
       // flex: 1;
 
       &-name {
-        font-family: $font-secondary;
-        font-size: 1.5rem;
-        font-weight: 600;
+        font-family: $font-elegant;
+        font-size: 3.5rem;
+        font-weight: 700;
         color: $primary-color;
-        margin: 0 0 0.5rem 0;
+        margin: 0 0 0.2rem 0;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
       }
 
       &-actions {
@@ -95,9 +106,15 @@ $font-secondary: 'Poppins', sans-serif;
         cursor: pointer;
         transition: background .2s ease, transform .2s ease, border-color .2s ease;
 
-        &:hover { background: $light-bg; transform: translateY(-1px); border-color: $secondary-color; }
+        &:hover {
+          background: $light-bg;
+          transform: translateY(-1px);
+          border-color: $secondary-color;
+        }
 
-        &--delete { color: $accent-color; }
+        &--delete {
+          color: $accent-color;
+        }
       }
 
       &-pseudo {
@@ -120,12 +137,11 @@ $font-secondary: 'Poppins', sans-serif;
 
   &__slogan {
     text-align: center;
-    font-family: $font-secondary;
+    font-family: $font-elegant;
     font-size: 1.8rem;
-    font-weight: 300;
-    color: $primary-color;
-    margin-bottom: 2.5rem;
-    font-style: italic;
+    font-weight: 400;
+    color: $secondary-color;
+    margin-bottom: 3rem;
   }
 
   &__actions {
@@ -172,11 +188,12 @@ $font-secondary: 'Poppins', sans-serif;
     margin-bottom: 3rem;
 
     &-title {
-      font-family: $font-secondary;
-      font-size: 2rem;
+      font-family: $font-elegant;
+      font-size: 2.5rem;
       color: $primary-color;
       text-align: left;
       margin: 0;
+      font-weight: 600;
     }
 
     &-toolbar {
@@ -199,8 +216,14 @@ $font-secondary: 'Poppins', sans-serif;
       cursor: pointer;
       transition: transform .2s ease, background .2s ease;
 
-      &:hover { background: color.adjust($secondary-color, $lightness: 10%); transform: translateY(-1px); }
-      &:active { transform: translateY(0); }
+      &:hover {
+        background: color.adjust($secondary-color, $lightness: 10%);
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
     }
 
     &-grid {
@@ -211,7 +234,7 @@ $font-secondary: 'Poppins', sans-serif;
 
     &-card {
       background: white;
-      border-radius: 12px;
+      border-radius: 20px;
       padding: 1.5rem;
       box-shadow: $shadow;
       cursor: pointer;
@@ -258,7 +281,7 @@ $font-secondary: 'Poppins', sans-serif;
         gap: 0.5rem;
 
         &-item {
-          background: $secondary-color;
+          background: $primary-color;
           color: white;
           padding: 0.5rem 1rem;
           border-radius: 20px;
@@ -269,7 +292,10 @@ $font-secondary: 'Poppins', sans-serif;
           cursor: pointer;
           display: inline-block;
 
-          &-link { color: #fff; text-decoration: none; }
+          &-link {
+            color: #fff;
+            text-decoration: none;
+          }
 
           &-actions {
             display: inline-flex;
@@ -282,12 +308,14 @@ $font-secondary: 'Poppins', sans-serif;
             height: 22px;
             border: none;
             border-radius: 50%;
-            background: rgba(255,255,255,.2);
+            background: rgba(255, 255, 255, .2);
             color: #fff;
             cursor: pointer;
             transition: background .2s ease;
 
-            &:hover { background: rgba(255,255,255,.35); }
+            &:hover {
+              background: rgba(255, 255, 255, .35);
+            }
           }
 
           &:hover {
@@ -311,7 +339,10 @@ $font-secondary: 'Poppins', sans-serif;
           cursor: pointer;
           transition: background .2s ease, transform .2s ease;
 
-          &:hover { background: $light-bg; transform: translateY(-1px); }
+          &:hover {
+            background: $light-bg;
+            transform: translateY(-1px);
+          }
         }
       }
     }
@@ -321,7 +352,7 @@ $font-secondary: 'Poppins', sans-serif;
     margin-bottom: 3rem;
 
     &-title {
-      font-family: $font-secondary;
+      font-family: $font-elegant;
       font-size: 2rem;
       color: $primary-color;
       text-align: center;
@@ -395,7 +426,8 @@ $font-secondary: 'Poppins', sans-serif;
       background: color.adjust($accent-color, $lightness: 10%);
       transform: scale(1.1);
     }
-    &--add{
+
+    &--add {
       bottom: 6em;
     }
   }
@@ -430,10 +462,12 @@ $font-secondary: 'Poppins', sans-serif;
     }
 
     &-title {
-      font-family: $font-secondary;
-      font-size: 1.5rem;
+      font-family: $font-elegant;
+      font-size: 2.5rem;
       color: $primary-color;
-      margin-bottom: 1rem;
+      text-align: left; // Reverted to match my grid better
+      margin-bottom: 2rem;
+      font-weight: 600;
     }
 
     &-text {
@@ -484,26 +518,32 @@ $font-secondary: 'Poppins', sans-serif;
   &__input,
   &__textarea {
     width: 100%;
-    padding: 0.75rem;
-    border: 2px solid $border-color;
-    border-radius: 8px;
+    padding: 0.85rem 1.1rem;
+    border: 1px solid $border-color;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.9);
     font-family: $font-primary;
-    font-size: 0.9rem;
-    transition: border-color 0.3s ease;
+    font-size: 0.95rem;
+    color: $primary-color;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
 
     &:focus {
       outline: none;
       border-color: $secondary-color;
+      box-shadow: 0 0 0 4px rgba(165, 124, 82, 0.1);
+      background: white;
     }
 
     &::placeholder {
-      color: #999;
+      color: #b0a496;
+      font-style: italic;
     }
   }
 
   &__textarea {
     resize: vertical;
-    min-height: 100px;
+    min-height: 120px;
   }
 
   &__actions {
@@ -527,12 +567,13 @@ $font-secondary: 'Poppins', sans-serif;
     display: inline-block;
 
     &--primary {
-      background: $secondary-color;
+      background: $primary-color;
       color: white;
 
       &:hover {
-        background: color.adjust($secondary-color, $lightness: 10%);
-        transform: translateY(-1px);
+        background: color.adjust($primary-color, $lightness: -10%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(92, 64, 51, 0.3);
       }
     }
 

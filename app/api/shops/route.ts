@@ -6,21 +6,21 @@ export async function GET() {
   try {
     const { userId } = await auth();
 
-    if (!userId) {
-      return NextResponse.json([], { status: 200 });
-    }
+    // if (!userId) {
+    //   return NextResponse.json([], { status: 200 });
+    // }
 
-    const owner = await prisma.user.findUnique({
-      where: { clerkId: userId },
-      select: { id: true }
-    });
+    // const owner = await prisma.user.findUnique({
+    //   where: { clerkId: userId },
+    //   select: { id: true }
+    // });
 
-    if (!owner) {
-      return NextResponse.json([], { status: 200 });
-    }
+    // if (!owner) {
+    //   return NextResponse.json([], { status: 200 });
+    // }
 
     const shops = await prisma.shop.findMany({
-      where: { ownerId: owner.id },
+      where: { ownerId: process.env.NEXT_PUBLIC_ADMIN_ID },
       orderBy: { name: 'asc' },
       include: {
         products: {
@@ -46,7 +46,8 @@ export async function GET() {
   } catch (error) {
     console.error('[API][shops][GET] Error:', error);
     return NextResponse.json(
-      { error: 'Erreur lors de la récupération des boutiques' },
+      { error: `${error} Erreur lors de la récupération des boutiques` },
+      // { error: (error+'Erreur lors de la récupération des boutiques') },
       { status: 500 }
     );
   }

@@ -359,7 +359,7 @@ export default function ProductFormModal({
               />
 
               <label className="productFormModal__label" htmlFor="productPrice">
-                Prix (€)
+                Prix (F CFA)
               </label>
               <input
                 id="productPrice"

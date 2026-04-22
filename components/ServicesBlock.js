@@ -2,7 +2,7 @@
 
 import {useGlobal} from "@/utils/GlobalProvider"
 import '@/assets/scss/components/SERVICES/services-page.scss';
-import {loadServiceData, renderStars, formatPrice, getYouTubeEmbedUrl, handleSaveChanges, handleFormChange, handleAdminEdit} from "../app/services/cb"
+import {loadServiceData, renderStars, formatPrice, getYouTubeEmbedUrl, handleAdminEdit} from "../app/services/cb"
 import {AdminModal,CvModal,BioModal,CommentarySection,ServicesSection,ActionsSection,ProfilSection,VideoSection} from "../app/services/components"
 
 
@@ -21,9 +21,9 @@ export default function ServicesBlock() {
   return (
     <main className="services-page">
 
-      <VideoSection {...{currentServiceDetails,getYouTubeEmbedUrl}} />
+      <VideoSection getYouTubeEmbedUrl={getYouTubeEmbedUrl} />
 
-      <ProfilSection {...{currentServiceDetails}} />
+      <ProfilSection />
 
       {/* Slogan */}
       <section className="services-page__slogan">
@@ -31,9 +31,9 @@ export default function ServicesBlock() {
       </section>
 
 
-      <ActionsSection {...{setShowBioModal}} />
+      <ActionsSection />
 
-      <ServicesSection {...{services,formatPrice}} />
+      <ServicesSection formatPrice={formatPrice} />
 
       <CommentarySection {...{comments,renderStars}}/>
 
@@ -49,13 +49,13 @@ export default function ServicesBlock() {
       )}
 
       {/* Modal Bio */}
-      {showBioModal && (<BioModal {...{currentServiceDetails,setShowBioModal}}/>)}
+      {showBioModal && (<BioModal />)}
 
       {/* Modal CV & Certificats */}
-      {showCvModal && (<CvModal {...{currentServiceDetails,setShowCvModal}}/>)}
+      {showCvModal && (<CvModal />)}
 
       {/* Modal d'édition admin */}
-      {showAdminModal && (<AdminModal {...{currentServiceDetails,setShowAdminModal,editForm,handleFormChange,handleSaveChanges}}/>)}
+      {showAdminModal && (<AdminModal />)}
       
     </main>
   );

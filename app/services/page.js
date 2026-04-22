@@ -6,7 +6,7 @@ import { useUser } from '@clerk/nextjs';
 import Image from 'next/image';
 import {useGlobal} from "@/utils/GlobalProvider"
 import '@/assets/scss/components/SERVICES/services-page.scss';
-import {loadServiceData, renderStars, formatPrice, getYouTubeEmbedUrl, handleSaveChanges, handleFormChange, handleAdminEdit} from "./cb"
+import {loadServiceData, renderStars, formatPrice, getYouTubeEmbedUrl, handleAdminEdit} from "./cb"
 import {AdminModal,CvModal,BioModal,CommentarySection,ServicesSection,ActionsSection,ProfilSection,VideoSection} from "./components"
 
 
@@ -19,9 +19,9 @@ export default function Services() {
   return (
     <main className="services-page">
 
-      <VideoSection {...{currentServiceDetails,getYouTubeEmbedUrl}} />
+      <VideoSection getYouTubeEmbedUrl={getYouTubeEmbedUrl} />
 
-      <ProfilSection {...{currentServiceDetails}} />
+      <ProfilSection />
 
       {/* Slogan */}
       <section className="services-page__slogan">
@@ -29,9 +29,9 @@ export default function Services() {
       </section>
 
 
-      <ActionsSection {...{setShowBioModal}} />
+      <ActionsSection />
 
-      <ServicesSection {...{services,formatPrice,isAdmin,serviceCategories,isServiceMutating,createService,updateService,deleteService,createDuration,updateDuration,deleteDuration,showServiceModal,setShowServiceModal}} />
+      <ServicesSection formatPrice={formatPrice} />
 
       <CommentarySection {...{comments,renderStars}}/>
 
@@ -58,13 +58,13 @@ export default function Services() {
       )}
 
       {/* Modal Bio */}
-      {showBioModal && (<BioModal {...{currentServiceDetails,setShowBioModal}}/>)}
+      {showBioModal && (<BioModal />)}
 
       {/* Modal CV & Certificats */}
-      {showCvModal && (<CvModal {...{currentServiceDetails,setShowCvModal}}/>)}
+      {showCvModal && (<CvModal />)}
 
       {/* Modal d'édition admin */}
-      {showAdminModal && (<AdminModal {...{currentServiceDetails,setShowAdminModal,editForm,handleFormChange,handleSaveChanges}}/>)}
+      {showAdminModal && (<AdminModal />)}
       
     </main>
   );

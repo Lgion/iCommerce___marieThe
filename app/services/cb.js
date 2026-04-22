@@ -23,45 +23,4 @@ const handleAdminEdit = (setShowAdminModal) => {
     setShowAdminModal(true);
 };
 
-const handleFormChange = (e) => {
-    const { name, value } = e.target;
-    setEditForm(prev => ({
-      ...prev,
-      [name]: value
-    }));
-};
-
-const handleSaveChanges = async () => {
-    try {
-        const method = serviceDetails ? 'PUT' : 'POST';
-        const body = serviceDetails 
-            ? { ...editForm, id: serviceDetails.id }
-            : { ...editForm, userId: user?.id };
-
-        const response = await fetch('/api/service-details', {
-            method,
-            headers: {
-            'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
-        });
-
-        if (response.ok) {
-            const updatedDetails = await response.json();
-            setServiceDetails(updatedDetails);
-            storageManager.writeJSON('serviceDetails', updatedDetails);
-            setShowAdminModal(false);
-            
-            // Recharger la page pour afficher les changements
-            window.location.reload();
-        } else {
-            console.error('Erreur lors de la sauvegarde');
-            alert('Erreur lors de la sauvegarde des modifications');
-        }
-    } catch (error) {
-        console.error('Erreur:', error);
-        alert('Erreur lors de la sauvegarde des modifications');
-    }
-};
-
-export {renderStars, formatPrice, getYouTubeEmbedUrl, handleSaveChanges, handleFormChange, handleAdminEdit}
+export {renderStars, formatPrice, getYouTubeEmbedUrl, handleAdminEdit}

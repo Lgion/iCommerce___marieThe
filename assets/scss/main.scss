@@ -1,4 +1,3 @@
-
 @use "./utils/variables";
 @use "./utils/functions";
 @use "./utils/mixins";
@@ -12,6 +11,8 @@
 
 
 @use "./themes/template";
+
+@use "./components/HEADERS/icommerce";
 
 
 // @use "./components/buttons";
@@ -39,4 +40,3 @@
 
 // Dashboard components
 @use "./components/DASHBOARD/index.scss";
-

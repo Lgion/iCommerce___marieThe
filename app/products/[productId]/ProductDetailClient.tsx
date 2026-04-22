@@ -111,8 +111,8 @@ export default function ProductDetailClient({ initialProduct, availableShops }: 
             {product?.description}
           </p>
           <div className="productDetail__meta">
-            <span className="productDetail__price" itemProp="price" data-currency="EUR">
-              {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(product?.price || 0)}
+            <span className="productDetail__price" itemProp="price" data-currency="XOF">
+              {new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'XOF' }).format(product?.price || 0)}
             </span>
             <meta itemProp="priceCurrency" content="EUR" />
             {product?.shop?.name ? (
