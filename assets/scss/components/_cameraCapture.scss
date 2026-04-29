@@ -1,0 +1,196 @@
+@use "sass:color";
+@use "../utils/variables" as *;
+
+.cameraCapture {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $L;
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba($gray-900, 0.85);
+    backdrop-filter: blur(4px);
+  }
+
+  &__modal {
+    position: relative;
+    width: min(500px, 100%);
+    background: $white;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: $shadow-xl;
+  }
+
+  &__header {
+    padding: $M;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: $gray-50;
+    border-bottom: 1px solid $gray-200;
+  }
+
+  &__title {
+    font-family: $titres;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+    color: $gray-900;
+  }
+
+  &__close-btn {
+    border: none;
+    background: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: $gray-500;
+    line-height: 1;
+    
+    &::after { content: "×"; }
+  }
+
+  &__content {
+    position: relative;
+    aspect-ratio: 4/3;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__preview {
+    width: 100%;
+    height: 100%;
+  }
+
+  &__captured {
+    width: 100%;
+    height: 100%;
+    
+    &-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__viewfinder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+
+    &-frame {
+      width: 80%;
+      height: 80%;
+      border: 2px solid rgba($white, 0.5);
+      border-radius: 1rem;
+    }
+  }
+
+  &__controls {
+    padding: $L;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background: $white;
+  }
+
+  &__capture-btn {
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 999px;
+    border: 4px solid $gray-200;
+    background: none;
+    padding: 4px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+
+    &-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 999px;
+      background: $danger-color;
+    }
+
+    &:hover { transform: scale(1.05); }
+    &:active { transform: scale(0.95); }
+  }
+
+  &__switch-btn, &__cancel-btn, &__retake-btn, &__confirm-btn {
+    border: none;
+    background: $gray-100;
+    color: $gray-700;
+    padding: 0.6rem 1.2rem;
+    border-radius: 999px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.9rem;
+    
+    &:hover { background: $gray-200; }
+  }
+
+  &__confirm-btn {
+    background: $success-color;
+    color: $white;
+    &::after { content: "Confirmer"; }
+    &:hover { background: $success-hover; }
+  }
+
+  &__retake-btn {
+    &::after { content: "Reprendre"; }
+  }
+
+  &__switch-btn {
+    &::after { content: "🔄"; }
+  }
+
+  &__retry-btn {
+    &::after { content: "Réessayer"; }
+    background: $primary-color;
+    color: $white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+    cursor: pointer;
+  }
+
+  &__loading, &__error {
+    color: $white;
+    text-align: center;
+    padding: $L;
+    
+    h4 { margin: 0 0 0.5rem; }
+    p { margin: 0; font-size: 0.9rem; opacity: 0.8; }
+  }
+
+  &__spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba($white, 0.3);
+    border-top-color: $white;
+    border-radius: 50%;
+    animation: camera-spin 1s linear infinite;
+    margin: 0 auto 1rem;
+  }
+}
+
+@keyframes camera-spin {
+  to { transform: rotate(360deg); }
+}

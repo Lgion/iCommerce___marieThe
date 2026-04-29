@@ -13,7 +13,7 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
 
   // Protection du dashboard - réservé aux propriétaires
   if (pathname.startsWith('/dashboard')) {
-    const { userId } = auth()
+    const { userId } = await auth()
     
     if (!userId) {
       return NextResponse.redirect(new URL('/sign-in', req.url))

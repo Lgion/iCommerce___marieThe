@@ -1,5 +1,6 @@
 // import './globals.css';
 import { Inter } from 'next/font/google';
+import { Suspense } from 'react';
 import { ClerkProvider } from '@clerk/nextjs';
 import GlobalProvider from '@/utils/GlobalProvider';
 import Header from '@/app/Header';
@@ -20,15 +21,17 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-    <GlobalProvider>
       <html lang="fr">
         <body className={inter.className}>
-          <Header />
-          <Navbar />
-          {children}
+          <Suspense fallback={null}>
+            <GlobalProvider>
+              <Header />
+              <Navbar />
+              {children}
+            </GlobalProvider>
+          </Suspense>
         </body>
       </html>
-    </GlobalProvider>
     </ClerkProvider>
   );
 }

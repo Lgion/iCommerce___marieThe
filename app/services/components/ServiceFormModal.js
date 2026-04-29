@@ -1,6 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import CameraCapture from '@/components/CameraCapture';
+import useCloudinaryUpload from '@/components/hooks/useCloudinaryUpload';
+import { useGlobal } from "@/utils/GlobalProvider";
 
 import "@/assets/scss/components/servicesPage/_serviceFormModal.scss";
 
@@ -10,7 +13,7 @@ const defaultFormState = {
   name: "",
   description: "",
   imageUrl: "",
-  type: "",
+  type: "Présentiel",
   prixHoraire: "",
   categoryId: "",
   durations: [createDurationField()]
@@ -21,10 +24,17 @@ export default function ServiceFormModal({
   onClose,
   onSubmit,
   categories = [],
-  isSubmitting = false
+  isSubmitting = false,
+  service = null
 }) {
+  const { createServiceCategory, deleteServiceCategory } = useGlobal();
   const [formDraft, setFormDraft] = useState(defaultFormState);
   const [formError, setFormError] = useState(null);
+  const [isCameraOpen, setIsCameraOpen] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState("");
+  const [showCategoryManager, setShowCategoryManager] = useState(false);
+
+  const { uploading, uploadToCloudinary } = useCloudinaryUpload();
 
   const hasCategories = categories.length > 0;
 
@@ -37,13 +47,25 @@ export default function ServiceFormModal({
       return;
     }
 
-    if (categories.length > 0) {
+    if (service) {
+      setFormDraft({
+        name: service.name || "",
+        description: service.description || "",
+        imageUrl: service.imageUrl || "",
+        type: service.type || "",
+        prixHoraire: service.prixHoraire || "",
+        categoryId: service.categoryId || "",
+        durations: service.durations?.length > 0
+          ? service.durations.map(d => ({ id: d.id, minutes: d.minutes }))
+          : [createDurationField()]
+      });
+    } else if (categories.length > 0) {
       setFormDraft((previous) => ({
         ...previous,
         categoryId: previous.categoryId || categories[0]?.id || ""
       }));
     }
-  }, [isOpen, categories]);
+  }, [isOpen, categories, service]);
 
   if (!isOpen) {
     return null;
@@ -54,6 +76,60 @@ export default function ServiceFormModal({
       ...previous,
       [fieldName]: value
     }));
+  };
+
+  const uploadImageFile = useCallback(
+    async (file) => {
+      if (!file) return;
+
+      const result = await uploadToCloudinary(
+        file,
+        'services',
+        service?.id || null,
+        null
+      );
+
+      if (result.success && result.data) {
+        setFormDraft((previous) => ({
+          ...previous,
+          imageUrl: result.data.url
+        }));
+        setFormError('');
+      } else {
+        setFormError(result.error || "Erreur lors de l'upload de l'image.");
+      }
+    },
+    [service?.id, uploadToCloudinary]
+  );
+
+  const handleImageFileChange = async (event) => {
+    const file = event.target.files?.[0];
+    if (file) await uploadImageFile(file);
+  };
+
+  const handleCameraCapture = async (file) => {
+    await uploadImageFile(file);
+    setIsCameraOpen(false);
+  };
+
+  const handleAddCategory = async () => {
+    if (!newCategoryName.trim()) return;
+    try {
+      await createServiceCategory?.({ name: newCategoryName.trim() });
+      setNewCategoryName("");
+    } catch (err) {
+      setFormError("Erreur lors de la création de la catégorie.");
+    }
+  };
+
+  const handleDeleteCategory = async (catId) => {
+    if (window.confirm("Supprimer cette catégorie ? Cela n'affectera pas les services existants mais ils devront être réassignés.")) {
+      try {
+        await deleteServiceCategory?.(catId);
+      } catch (err) {
+        setFormError("Erreur lors de la suppression de la catégorie.");
+      }
+    }
   };
 
   const handleDurationChange = (durationId, value) => {
@@ -148,7 +224,7 @@ export default function ServiceFormModal({
       <div className="serviceFormModal__container" role="document">
         <header className="serviceFormModal__header">
           <h2 id="serviceFormModalTitle" className="serviceFormModal__title">
-            Ajouter un service
+            {service ? "Modifier le service" : "Ajouter un service"}
           </h2>
           <button
             type="button"
@@ -204,26 +280,46 @@ export default function ServiceFormModal({
               <label className="serviceFormModal__label" htmlFor="serviceType">
                 Type de service
               </label>
-              <input
+              <select
                 id="serviceType"
                 name="type"
-                value={formDraft.type}
+                value={formDraft.type || "Présentiel"}
                 onChange={(event) => handleFieldChange("type", event.target.value)}
-                className="serviceFormModal__input"
-                placeholder="Catégorie interne (coiffure, bien-être, consulting...)"
-              />
+                className="serviceFormModal__select"
+              >
+                <option value="Présentiel">Présentiel</option>
+                <option value="Online">Online</option>
+              </select>
 
               <label className="serviceFormModal__label" htmlFor="serviceImage">
-                Image (URL)
+                Image du service
               </label>
-              <input
-                id="serviceImage"
-                name="imageUrl"
-                value={formDraft.imageUrl}
-                onChange={(event) => handleFieldChange("imageUrl", event.target.value)}
-                className="serviceFormModal__input"
-                placeholder="https://..."
-              />
+              <div className="serviceFormModal__imageControls">
+                <input
+                  id="serviceImage"
+                  name="imageUrl"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageFileChange}
+                  className="serviceFormModal__input serviceFormModal__input--file"
+                  disabled={uploading}
+                />
+                <button
+                  type="button"
+                  className="serviceFormModal__cameraButton"
+                  onClick={() => setIsCameraOpen(true)}
+                >
+                  📷 Caméra
+                </button>
+              </div>
+              
+              {uploading && <p className="serviceFormModal__status">Upload en cours...</p>}
+              
+              {formDraft.imageUrl && (
+                <div className="serviceFormModal__preview">
+                  <img src={formDraft.imageUrl} alt="Aperçu" className="serviceFormModal__previewImage" />
+                </div>
+              )}
 
               <label className="serviceFormModal__label" htmlFor="servicePrice">
                 Prix horaire (€)
@@ -237,13 +333,46 @@ export default function ServiceFormModal({
                 placeholder="Ex: 60"
                 type="number"
                 min="0"
-                step="0.01"
+                step="5"
                 required
               />
 
-              <label className="serviceFormModal__label" htmlFor="serviceCategory">
-                Catégorie
-              </label>
+              <div className="serviceFormModal__categoryHeader">
+                <label className="serviceFormModal__label" htmlFor="serviceCategory">
+                  Catégorie
+                </label>
+                <button 
+                  type="button" 
+                  className="serviceFormModal__manageBtn"
+                  onClick={() => setShowCategoryManager(!showCategoryManager)}
+                >
+                  {showCategoryManager ? "Fermer" : "Gérer les catégories"}
+                </button>
+              </div>
+
+              {showCategoryManager && (
+                <div className="serviceFormModal__categoryManager">
+                  <div className="serviceFormModal__addCategory">
+                    <input 
+                      type="text" 
+                      value={newCategoryName} 
+                      onChange={(e) => setNewCategoryName(e.target.value)}
+                      placeholder="Nouvelle catégorie..."
+                      className="serviceFormModal__input"
+                    />
+                    <button type="button" onClick={handleAddCategory}>Ajouter</button>
+                  </div>
+                  <ul className="serviceFormModal__categoryList">
+                    {categories.map(cat => (
+                      <li key={cat.id}>
+                        {cat.name}
+                        <button type="button" onClick={() => handleDeleteCategory(cat.id)}>×</button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
               <select
                 id="serviceCategory"
                 name="categoryId"
@@ -278,8 +407,8 @@ export default function ServiceFormModal({
                     <div className="serviceFormModal__durationFields">
                       <input
                         type="number"
-                        min="1"
-                        step="1"
+                        min="5"
+                        step="5"
                         placeholder="Durée en minutes"
                         value={duration.minutes}
                         onChange={(event) => handleDurationChange(duration.id, event.target.value)}
@@ -320,6 +449,13 @@ export default function ServiceFormModal({
           </footer>
         </form>
       </div>
+      {isCameraOpen && (
+        <CameraCapture
+          onCapture={handleCameraCapture}
+          onClose={() => setIsCameraOpen(false)}
+          facingMode="environment"
+        />
+      )}
     </div>
   );
 }

@@ -1,4 +1,8 @@
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -28,13 +32,6 @@ const nextConfig = {
     ]
   },
   webpack: (config) => {
-    // Ajoutez le support pour les fichiers SCSS
-    config.module.rules.push({
-      test: /\.scss$/,
-      use: ['style-loader', 'css-loader', 'sass-loader'],
-      include: path.resolve(__dirname, 'assets/scss')
-    });
-
     // Configuration des alias
     config.resolve.alias = {
       ...config.resolve.alias,

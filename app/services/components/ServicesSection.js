@@ -21,22 +21,27 @@ export default function ServicesSection({ formatPrice }) {
     updateDuration,
     deleteDuration,
     showServiceModal,
-    setShowServiceModal
+    setShowServiceModal,
+    currentServiceDetails
   } = useGlobal();
 
   const [pendingServiceId, setPendingServiceId] = useState(null);
+  const [editingService, setEditingService] = useState(null);
 
   const handleCreateService = () => setShowServiceModal(true);
   const handleSubmitService = async (payload) => {
-    await createService?.(payload);
+    if (editingService) {
+      await updateService?.(editingService.id, payload);
+    } else {
+      await createService?.(payload);
+    }
     setShowServiceModal(false);
+    setEditingService(null);
   };
 
-  const handleEditService = async (service) => {
-    const newName = window.prompt('Nouveau nom du service:', service.name);
-    if (newName && newName.trim() && newName !== service.name) {
-      await updateService?.(service.id, { name: newName.trim() });
-    }
+  const handleEditService = (service) => {
+    setEditingService(service);
+    setShowServiceModal(true);
   };
 
   const handleDeleteService = async (service) => {
@@ -86,6 +91,23 @@ export default function ServicesSection({ formatPrice }) {
           </button>
         )}
       </div>
+      
+      {currentServiceDetails?.servicesSubtitle && (
+        <div 
+          className="services-page__intro" 
+          style={{ 
+            fontFamily: currentServiceDetails?.serviceSubtitleFont || undefined,
+            color: currentServiceDetails?.serviceSubtitleColor || undefined,
+            backgroundColor: currentServiceDetails?.serviceBgColor 
+              ? `${currentServiceDetails.serviceBgColor}${Math.round((currentServiceDetails.serviceBgOpacity ?? 0.7) * 255).toString(16).padStart(2, '0')}` 
+              : undefined
+          }}
+        >
+          <p style={{ color: currentServiceDetails?.serviceSubtitleColor || undefined }}>
+            {currentServiceDetails.servicesSubtitle}
+          </p>
+        </div>
+      )}
 
       <ul className="services-page__services-grid">
         {services.length > 0 ? (
@@ -122,7 +144,9 @@ export default function ServicesSection({ formatPrice }) {
                 className="services-page__services-card-image"
               />
               <h3 className="services-page__services-card-title">{service.name}</h3>
-              <p className="services-page__services-card-type">{service.type}</p>
+              <p className={`services-page__services-card-type services-page__services-card-type--${(service.type || 'Présentiel').toLowerCase()}`}>
+                {service.type || 'Présentiel'}
+              </p>
               <p className="services-page__services-card-description">{service.description}</p>
 
               <div className="services-page__services-card-pricing">
@@ -196,6 +220,7 @@ export default function ServicesSection({ formatPrice }) {
           onSubmit={handleSubmitService}
           categories={serviceCategories}
           isSubmitting={isServiceMutating}
+          service={editingService}
         />
       )}
     </section>

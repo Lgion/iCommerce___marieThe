@@ -3,7 +3,7 @@
 // import { createPrismaCrudHandlers } from '../_/utils/genericCrudHandlerPrisma';
 // export const { GET, POST, PUT, DELETE } = createPrismaCrudHandlers('user');
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import prisma from '@/lib/prisma';
 
 export function createPrismaCrudHandlers(modelName) {
   const model = prisma[modelName];

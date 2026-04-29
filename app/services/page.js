@@ -22,11 +22,19 @@ export default function Services() {
       <VideoSection getYouTubeEmbedUrl={getYouTubeEmbedUrl} />
 
       <ProfilSection />
-
+      
       {/* Slogan */}
-      <section className="services-page__slogan">
+      <section 
+        className="services-page__slogan" 
+        style={{ 
+          fontFamily: currentServiceDetails?.serviceSubtitleFont || undefined,
+          color: currentServiceDetails?.serviceSubtitleColor || undefined
+        }}
+      >
         "{currentServiceDetails.slogan}"
       </section>
+
+
 
 
       <ActionsSection />

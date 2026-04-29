@@ -5,7 +5,7 @@ import prisma from '@/lib/prisma';
 // GET - Récupérer les sessions dashboard
 export async function GET(request: NextRequest) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth();
 
     if (!userId) {
       return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
 // POST - Créer une nouvelle session (login)
 export async function POST(request: NextRequest) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth();
 
     if (!userId) {
       return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
@@ -101,7 +101,7 @@ export async function POST(request: NextRequest) {
 // PUT - Mettre à jour une session (logout)
 export async function PUT(request: NextRequest) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth();
 
     if (!userId) {
       return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });

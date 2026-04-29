@@ -4,7 +4,7 @@ import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 export default function Navbar() {
   return (
     <nav className="headerBlock">
-      <Link href="/" className="headerBlock__home">iCommerce</Link>
+      <Link href="/" className="headerBlock__home"><img src="/icommerce.png" alt="" /></Link>
       <div className="headerBlock__log">
         {/* <Link href="/products" className="hover:text-blue-600">Produits</Link> */}
         {/* <Link href="/services" className="hover:text-blue-600">Services</Link> */}

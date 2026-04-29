@@ -3,8 +3,8 @@ import prisma from '@/lib/prisma';
 import ProductDetailClient from './ProductDetailClient';
 import '@/assets/scss/components/productsPage/_productsPage.scss';
 
-export default async function ProductDetailPage({ params }: { params: { productId: string } }) {
-  const { productId } = params;
+export default async function ProductDetailPage({ params }: { params: Promise<{ productId: string }> }) {
+  const { productId } = await params;
 
   const product = await prisma.product.findUnique({
     where: { id: productId },

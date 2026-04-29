@@ -16,7 +16,16 @@ const defaultModalState = {
 export default function ProductsBlock(props = {}) {
   const {
     showCartButton = true,
-    cartHref = '/cart'
+    cartHref = '/cart',
+    title = 'Nos Produits',
+    subtitle = '',
+    description = '',
+    titleFont = '',
+    subtitleFont = '',
+    titleColor = '',
+    subtitleColor = '',
+    bgColor = '',
+    bgOpacity = 0.5
   } = props;
   const router = useRouter();
   const {
@@ -186,8 +195,43 @@ export default function ProductsBlock(props = {}) {
     <main className={`productsPage${productsLoading ? ' is-loading' : ''}`}>
       
       <header className="productsPage__header">
-        <div className="productsPage__headerContent">
-          <h2 className="productsPage__title">Nos Produits</h2>
+        <div 
+          className="productsPage__headerContent"
+          style={{ 
+            backgroundColor: bgColor ? `${bgColor}${Math.round(bgOpacity * 255).toString(16).padStart(2, '0')}` : undefined 
+          }}
+        >
+          <h2 
+            className="productsPage__title" 
+            style={{ 
+              fontFamily: titleFont || undefined,
+              color: titleColor || undefined
+            }}
+          >
+            {title}
+          </h2>
+          {subtitle && (
+            <p 
+              className="productsPage__subtitle" 
+              style={{ 
+                fontFamily: subtitleFont || undefined,
+                color: subtitleColor || undefined
+              }}
+            >
+              {subtitle}
+            </p>
+          )}
+          {description && (
+            <div 
+              className="productsPage__description" 
+              style={{ 
+                fontFamily: subtitleFont || undefined,
+                color: subtitleColor || undefined
+              }}
+            >
+              <p>{description}</p>
+            </div>
+          )}
           {feedbackMessage ? (
             <p className="productsPage__feedback" role="status">
               {feedbackMessage}

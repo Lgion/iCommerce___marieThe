@@ -37,6 +37,7 @@
 @use "./components/productFormModal/productFormModal";
 @use "./components/productActions/productActions";
 @use "./components/productDetail/productDetail";
+@use "./components/cameraCapture";
 
 // Dashboard components
 @use "./components/DASHBOARD/index.scss";

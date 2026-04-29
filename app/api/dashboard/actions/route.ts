@@ -5,7 +5,7 @@ import prisma from '@/lib/prisma';
 // POST - Logger une action dans le dashboard
 export async function POST(request: NextRequest) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth();
 
     if (!userId) {
       return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
 // GET - Récupérer les actions
 export async function GET(request: NextRequest) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth();
 
     if (!userId) {
       return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });

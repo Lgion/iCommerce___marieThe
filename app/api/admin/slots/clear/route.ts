@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs/server';
+import { auth, currentUser } from '@clerk/nextjs/server';
 import prisma from '@/lib/prisma';
 
 // Fonction pour vérifier si l'utilisateur est admin
@@ -7,7 +7,7 @@ async function isAdmin(userId: string | null): Promise<boolean> {
   if (!userId) return false;
   
   try {
-    const { user } = await auth();
+    const user = await currentUser();
     const adminEmail = process.env.NEXT_PUBLIC_ADMIN_USER;
     return user?.emailAddresses?.[0]?.emailAddress === adminEmail;
   } catch (error) {

@@ -6,7 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../app/generated/prisma"
+  output   = "./generated/client"
 }
 
 datasource db {
@@ -146,6 +146,29 @@ model ServiceDetails {
   pseudo        String
   slogan        String?
   description   String?         // Bio/description
+  ecommerceTitle String?        // Titre de la boutique e-commerce
+  ecommerceSubtitle String?     // Sous-titre ou petit paragraphe e-commerce
+  ecommerceDescription String?  // Description longue e-commerce
+  servicesSubtitle String?      // Sous-titre ou petit paragraphe services
+  
+  // Styling Services
+  serviceTitleFont      String?
+  serviceSubtitleFont   String?
+  serviceTitleColor     String?
+  serviceSubtitleColor  String?
+  serviceBgColor        String?
+  serviceBgOpacity      Float?
+  serviceBgImage        String?   // New: Image de fond services
+  
+  // Styling E-commerce
+  ecommerceTitleFont     String?
+  ecommerceSubtitleFont  String?
+  ecommerceTitleColor    String?
+  ecommerceSubtitleColor String?
+  ecommerceBgColor       String?
+  ecommerceBgOpacity     Float?
+  ecommerceBgImage       String?   // New: Image de fond e-commerce
+
   category      ServiceCategory @relation(fields: [categoryId], references: [id])
   categoryId    String
   user          User            @relation(fields: [userId], references: [id])

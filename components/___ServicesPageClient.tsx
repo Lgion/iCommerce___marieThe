@@ -114,8 +114,7 @@ export default function ServicesPageClient({ initialSlots }: ServicesPageClientP
         {isLoaded && isAdmin && selectedDate && (
           <section className="diagram">
             <DayTimeDiagram 
-              selectedDate={selectedDate} 
-              slots={slots}
+              referenceDate={selectedDate} 
             />
           </section>
         )}

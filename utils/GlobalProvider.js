@@ -113,6 +113,24 @@ export default function GlobalProvider({ children }) {
     pseudo: '',
     slogan: '',
     description: '',
+    ecommerceTitle: '',
+    ecommerceSubtitle: '',
+    ecommerceDescription: '',
+    servicesSubtitle: '',
+    serviceTitleFont: '',
+    serviceSubtitleFont: '',
+    serviceTitleColor: '#5c4033',
+    serviceSubtitleColor: '#8b5e34',
+    serviceBgColor: '#ffffff',
+    serviceBgOpacity: 0.7,
+    serviceBgImage: '/serviceBgImage.webp',
+    ecommerceTitleFont: '',
+    ecommerceSubtitleFont: '',
+    ecommerceTitleColor: '#5d4037',
+    ecommerceSubtitleColor: '#6d4c41',
+    ecommerceBgColor: '#ffffff',
+    ecommerceBgOpacity: 0.5,
+    ecommerceBgImage: '/ecommerceBgImage.webp',
     categoryId: ''
   });
   // SERVICES-BOOKING
@@ -230,9 +248,11 @@ export default function GlobalProvider({ children }) {
     imageUrl: '/perso.avif',
     firstName: 'Marie',
     lastName: 'Dubois',
-    pseudo: '@marie_beauty',
-    category: { name: 'Beauté & Bien-être' },
-    slogan: 'Révélez votre beauté naturelle avec passion et expertise'
+    pseudo: '@marithe_loisirs',
+    category: { name: 'Loisir & Découverte' },
+    ecommerceTitle: 'Mes Perles',
+    ecommerceSubtitle: 'Des bijoux artisanaux faits avec amour et passion.',
+    slogan: 'Explorez de nouveaux horizons et découvrez des trésors uniques'
   };
 
   const updateProductsState = useCallback((updater) => {
@@ -396,21 +416,49 @@ export default function GlobalProvider({ children }) {
   const deleteService = useCallback(async (serviceId) => {
     try {
       setIsServiceMutating(true);
-      const response = await fetch('/api/services', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: serviceId })
+      const response = await fetch(`/api/services?id=${serviceId}`, {
+        method: 'DELETE'
       });
+
       if (!response.ok) {
-        const error = await response.json().catch(() => ({}));
-        throw new Error(error?.error || 'Erreur lors de la suppression du service');
+        throw new Error('Erreur lors de la suppression du service');
       }
-      updateServicesState((previous) => previous.filter((s) => s.id !== serviceId));
-      return true;
+
+      updateServicesState((previous) => previous.filter((item) => item.id !== serviceId));
     } finally {
       setIsServiceMutating(false);
     }
   }, [updateServicesState]);
+
+  const createServiceCategory = useCallback(async (payload) => {
+    try {
+      const response = await fetch('/api/service-categories', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (response.ok) {
+        const newCat = await response.json();
+        updateServiceCategoriesState(prev => [...prev, newCat]);
+        return newCat;
+      }
+    } catch (error) {
+      console.error('Erreur createServiceCategory:', error);
+    }
+  }, [updateServiceCategoriesState]);
+
+  const deleteServiceCategory = useCallback(async (id) => {
+    try {
+      const response = await fetch(`/api/service-categories?id=${id}`, {
+        method: 'DELETE'
+      });
+      if (response.ok) {
+        updateServiceCategoriesState(prev => prev.filter(c => c.id !== id));
+      }
+    } catch (error) {
+      console.error('Erreur deleteServiceCategory:', error);
+    }
+  }, [updateServiceCategoriesState]);
 
   // Durations CRUD
   const createDuration = useCallback(async (serviceId, minutes) => {
@@ -618,6 +666,24 @@ export default function GlobalProvider({ children }) {
           pseudo: details.pseudo || '',
           slogan: details.slogan || '',
           description: details.description || '',
+          ecommerceTitle: details.ecommerceTitle || '',
+          ecommerceSubtitle: details.ecommerceSubtitle || '',
+          ecommerceDescription: details.ecommerceDescription || '',
+          servicesSubtitle: details.servicesSubtitle || '',
+          serviceTitleFont: details.serviceTitleFont || '',
+          serviceSubtitleFont: details.serviceSubtitleFont || '',
+          serviceTitleColor: details.serviceTitleColor || '#5c4033',
+          serviceSubtitleColor: details.serviceSubtitleColor || '#8b5e34',
+          serviceBgColor: details.serviceBgColor || '#ffffff',
+          serviceBgOpacity: details.serviceBgOpacity || 0.7,
+          serviceBgImage: details.serviceBgImage || '/serviceBgImage.webp',
+          ecommerceTitleFont: details.ecommerceTitleFont || '',
+          ecommerceSubtitleFont: details.ecommerceSubtitleFont || '',
+          ecommerceTitleColor: details.ecommerceTitleColor || '#5d4037',
+          ecommerceSubtitleColor: details.ecommerceSubtitleColor || '#6d4c41',
+          ecommerceBgColor: details.ecommerceBgColor || '#ffffff',
+          ecommerceBgOpacity: details.ecommerceBgOpacity || 0.5,
+          ecommerceBgImage: details.ecommerceBgImage || '/ecommerceBgImage.webp',
           categoryId: details.categoryId || ''
         });
       } else {
@@ -634,6 +700,24 @@ export default function GlobalProvider({ children }) {
             pseudo: data.pseudo || '',
             slogan: data.slogan || '',
             description: data.description || '',
+            ecommerceTitle: data.ecommerceTitle || '',
+            ecommerceSubtitle: data.ecommerceSubtitle || '',
+            ecommerceDescription: data.ecommerceDescription || '',
+            servicesSubtitle: data.servicesSubtitle || '',
+            serviceTitleFont: data.serviceTitleFont || '',
+            serviceSubtitleFont: data.serviceSubtitleFont || '',
+            serviceTitleColor: data.serviceTitleColor || '#5c4033',
+            serviceSubtitleColor: data.serviceSubtitleColor || '#8b5e34',
+            serviceBgColor: data.serviceBgColor || '#ffffff',
+            serviceBgOpacity: data.serviceBgOpacity || 0.7,
+            serviceBgImage: data.serviceBgImage || '/serviceBgImage.webp',
+            ecommerceTitleFont: data.ecommerceTitleFont || '',
+            ecommerceSubtitleFont: data.ecommerceSubtitleFont || '',
+            ecommerceTitleColor: data.ecommerceTitleColor || '#5d4037',
+            ecommerceSubtitleColor: data.ecommerceSubtitleColor || '#6d4c41',
+            ecommerceBgColor: data.ecommerceBgColor || '#ffffff',
+            ecommerceBgOpacity: data.ecommerceBgOpacity || 0.5,
+            ecommerceBgImage: data.ecommerceBgImage || '/ecommerceBgImage.webp',
             categoryId: data.categoryId || ''
           });
         }
@@ -1135,6 +1219,7 @@ export default function GlobalProvider({ children }) {
     createProduct, updateProduct, deleteProduct,
     createService, isServiceMutating,
     updateService, deleteService,
+    createServiceCategory, deleteServiceCategory,
     createDuration, updateDuration, deleteDuration,
 
     // CART

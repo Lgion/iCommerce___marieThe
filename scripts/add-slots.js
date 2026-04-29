@@ -5,7 +5,7 @@
  * Usage: node scripts/add-slots.js [options]
  */
 
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient } = require('../prisma/generated/client');
 const {
   generateDaySlots,
   generateMultipleDaysSlots,

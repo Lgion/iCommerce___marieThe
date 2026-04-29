@@ -25,6 +25,7 @@ $headerBlock-font-alt: var(--font-secondary, 'Poppins', sans-serif);
   transition: transform $headerBlock-transition, box-shadow $headerBlock-transition;
 
   &__home {
+    padding-bottom: 0;
     font-family: $headerBlock-font-alt;
     font-size: clamp(1.4rem, 1.8vw, 1.8rem);
     font-weight: 700;
@@ -39,6 +40,10 @@ $headerBlock-font-alt: var(--font-secondary, 'Poppins', sans-serif);
     &:hover,
     &:focus-visible {
       color: $headerBlock-link-hover;
+    }
+
+    >img {
+      width: 100px;
     }
   }
 
@@ -95,4 +100,3 @@ $headerBlock-font-alt: var(--font-secondary, 'Poppins', sans-serif);
   box-shadow: var(--shadow-sm);
   transform: translateY(-2px);
 }
- 

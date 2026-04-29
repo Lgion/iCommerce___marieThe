@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@/app/generated/prisma';
-
-const prisma = new PrismaClient();
+import prisma from '@/lib/prisma';
 
 export async function GET() {
   try {
@@ -47,6 +45,24 @@ export async function POST(request) {
         pseudo: data.pseudo,
         slogan: data.slogan,
         description: data.description,
+        ecommerceTitle: data.ecommerceTitle,
+        ecommerceSubtitle: data.ecommerceSubtitle,
+        ecommerceDescription: data.ecommerceDescription,
+        servicesSubtitle: data.servicesSubtitle,
+        serviceTitleFont: data.serviceTitleFont,
+        serviceSubtitleFont: data.serviceSubtitleFont,
+        serviceTitleColor: data.serviceTitleColor,
+        serviceSubtitleColor: data.serviceSubtitleColor,
+        serviceBgColor: data.serviceBgColor,
+        serviceBgOpacity: data.serviceBgOpacity ? parseFloat(data.serviceBgOpacity) : null,
+        serviceBgImage: data.serviceBgImage,
+        ecommerceTitleFont: data.ecommerceTitleFont,
+        ecommerceSubtitleFont: data.ecommerceSubtitleFont,
+        ecommerceTitleColor: data.ecommerceTitleColor,
+        ecommerceSubtitleColor: data.ecommerceSubtitleColor,
+        ecommerceBgColor: data.ecommerceBgColor,
+        ecommerceBgOpacity: data.ecommerceBgOpacity ? parseFloat(data.ecommerceBgOpacity) : null,
+        ecommerceBgImage: data.ecommerceBgImage,
         categoryId: data.categoryId,
         userId: data.userId
       },
@@ -88,6 +104,24 @@ export async function PUT(request) {
         pseudo: data.pseudo,
         slogan: data.slogan,
         description: data.description,
+        ecommerceTitle: data.ecommerceTitle,
+        ecommerceSubtitle: data.ecommerceSubtitle,
+        ecommerceDescription: data.ecommerceDescription,
+        servicesSubtitle: data.servicesSubtitle,
+        serviceTitleFont: data.serviceTitleFont,
+        serviceSubtitleFont: data.serviceSubtitleFont,
+        serviceTitleColor: data.serviceTitleColor,
+        serviceSubtitleColor: data.serviceSubtitleColor,
+        serviceBgColor: data.serviceBgColor,
+        serviceBgOpacity: data.serviceBgOpacity ? parseFloat(data.serviceBgOpacity) : null,
+        serviceBgImage: data.serviceBgImage,
+        ecommerceTitleFont: data.ecommerceTitleFont,
+        ecommerceSubtitleFont: data.ecommerceSubtitleFont,
+        ecommerceTitleColor: data.ecommerceTitleColor,
+        ecommerceSubtitleColor: data.ecommerceSubtitleColor,
+        ecommerceBgColor: data.ecommerceBgColor,
+        ecommerceBgOpacity: data.ecommerceBgOpacity ? parseFloat(data.ecommerceBgOpacity) : null,
+        ecommerceBgImage: data.ecommerceBgImage,
         categoryId: data.categoryId
       },
       include: {

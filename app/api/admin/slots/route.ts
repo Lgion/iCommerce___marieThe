@@ -21,7 +21,7 @@ export async function GET() {
   try {
     const slots = await prisma.serviceSlot.findMany({
       include: { 
-        product: { select: { title: true, price: true } },
+        service: { select: { name: true, prixHoraire: true } },
         orderItem: {
           include: {
             order: { select: { id: true, status: true, createdAt: true } }
@@ -47,20 +47,20 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Accès non autorisé' }, { status: 403 });
     }
     
-    const { productId, startTime, endTime } = await request.json();
+    const { serviceId, startTime, endTime } = await request.json();
     
-    if (!productId || !startTime || !endTime) {
+    if (!serviceId || !startTime || !endTime) {
       return NextResponse.json({ error: 'Données manquantes' }, { status: 400 });
     }
     
     const slot = await prisma.serviceSlot.create({
       data: {
-        productId,
+        serviceId,
         startTime: new Date(startTime),
         endTime: new Date(endTime),
         isBooked: false
       },
-      include: { product: { select: { title: true, price: true } } }
+      include: { service: { select: { name: true, prixHoraire: true } } }
     });
     
     return NextResponse.json(slot);

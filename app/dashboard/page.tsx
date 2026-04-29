@@ -4,7 +4,7 @@ import ActivityLog from '@/components/dashboard/ActivityLog';
 import StatCard from '@/components/dashboard/StatCard';
 
 export default async function DashboardHomePage() {
-  const { userId } = auth();
+  const { userId } = await auth();
 
   if (!userId) {
     return null;

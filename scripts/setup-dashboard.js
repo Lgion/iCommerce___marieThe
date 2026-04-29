@@ -5,7 +5,7 @@
  * Usage: node scripts/setup-dashboard.js
  */
 
-const { PrismaClient } = require('../app/generated/prisma');
+const { PrismaClient } = require('../prisma/generated/client');
 const prisma = new PrismaClient();
 
 async function main() {

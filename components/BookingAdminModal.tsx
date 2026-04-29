@@ -26,6 +26,21 @@ const toIso = (date: string, time: string) => {
   return Number.isNaN(base.getTime()) ? null : base.toISOString();
 };
 
+const generate15MinSubSlots = (startIso: string, endIso: string) => {
+  const slots: { startTime: string; endTime: string }[] = [];
+  const start = new Date(startIso);
+  const end = new Date(endIso);
+  let current = new Date(start);
+  while (current < end) {
+    const next = new Date(current);
+    next.setMinutes(current.getMinutes() + 15);
+    if (next > end) break;
+    slots.push({ startTime: current.toISOString(), endTime: next.toISOString() });
+    current = next;
+  }
+  return slots;
+};
+
 const normalizeDuration = (value: number | string, fallback: number) => {
   const parsed = Number.parseInt(String(value), 10);
   return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
@@ -144,11 +159,18 @@ export default function BookingAdminModal({
     const end = new Date(startIso);
     end.setMinutes(end.getMinutes() + duration);
 
+    const subSlots = generate15MinSubSlots(startIso, end.toISOString());
+    if (subSlots.length === 0) {
+      setStatusType('error');
+      setStatusMessage('Durée trop courte.');
+      return;
+    }
+
     try {
-      await createSlots({
+      await createSlotsBulk({
         serviceId: service.id,
-        startTime: startIso,
-        endTime: end.toISOString()
+        pattern: 'batch',
+        slots: subSlots
       });
       setStatusType('success');
       setStatusMessage('Créneau créé avec succès.');
@@ -187,19 +209,15 @@ export default function BookingAdminModal({
     if (!service?.id) {
       return;
     }
-    const payloadSlots = batchSlots
-      .map((row) => {
-        const start = toIso(row.date, row.start);
-        const end = toIso(row.date, row.end);
-        if (!start || !end) {
-          return null;
-        }
-        return {
-          startTime: start,
-          endTime: end
-        };
-      })
-      .filter(Boolean);
+    
+    const payloadSlots: { startTime: string; endTime: string }[] = [];
+    batchSlots.forEach((row) => {
+      const start = toIso(row.date, row.start);
+      const end = toIso(row.date, row.end);
+      if (start && end) {
+        payloadSlots.push(...generate15MinSubSlots(start, end));
+      }
+    });
 
     if (payloadSlots.length === 0) {
       setStatusType('error');
@@ -254,7 +272,7 @@ export default function BookingAdminModal({
         to: new Date(recurringEndDate).toISOString(),
         startTime: recurringStartTime,
         endTime: recurringEndTime,
-        stepMinutes: normalizeDuration(recurringStep, 30)
+        stepMinutes: 15
       });
       setStatusType('success');
       setStatusMessage('Créneaux récurrents créés avec succès.');
@@ -503,6 +521,7 @@ export default function BookingAdminModal({
                   disabled={disabled}
                 />
               </div>
+              {/*
               <div className="bookingAdmin__field">
                 <label>Pas (minutes)</label>
                 <input
@@ -514,6 +533,7 @@ export default function BookingAdminModal({
                   disabled={disabled}
                 />
               </div>
+              */}
               <div className="bookingAdmin__actions">
                 <button type="button" className="bookingAdmin__secondary" onClick={handleClose}>
                   Annuler

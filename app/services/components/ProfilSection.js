@@ -18,10 +18,22 @@ export default () => {
                 priority
             />
             <div className="services-page__profile-info">
-                <h1 className="services-page__profile-info-name">
+                <h1 
+                    className="services-page__profile-info-name" 
+                    style={{ 
+                        fontFamily: currentServiceDetails?.serviceTitleFont || undefined,
+                        color: currentServiceDetails?.serviceTitleColor || undefined
+                    }}
+                >
                     {currentServiceDetails.firstName} {currentServiceDetails.lastName}
                 </h1>
-                <p className="services-page__profile-info-pseudo">
+                <p 
+                    className="services-page__profile-info-pseudo" 
+                    style={{ 
+                        fontFamily: currentServiceDetails?.serviceSubtitleFont || undefined,
+                        color: currentServiceDetails?.serviceSubtitleColor || undefined
+                    }}
+                >
                     {currentServiceDetails.pseudo}
                 </p>
                 <span className="services-page__profile-info-category">

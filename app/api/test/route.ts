@@ -10,14 +10,13 @@ export async function GET() {
         title: 'Test Product',
         description: 'A test product',
         price: 9.99,
-        type: 'PHYSICAL',
         shop: {
           create: {
             name: 'Test Shop',
             owner: {
               create: {
                 email: testEmail,
-                password: 'test',
+                clerkId: `test-${randomId}`,
               },
             },
           },
