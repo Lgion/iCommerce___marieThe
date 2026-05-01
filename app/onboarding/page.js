@@ -12,6 +12,7 @@ export default function OnboardingPage() {
   const [step, setStep] = useState(1);
   const [appType, setAppType] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState('Configuration en cours...');
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -76,6 +77,7 @@ export default function OnboardingPage() {
   const handleFinalSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setLoadingMessage('Création de votre profil...');
 
     try {
       // 1. Créer/mettre à jour l'utilisateur avec le type d'app
@@ -96,11 +98,14 @@ export default function OnboardingPage() {
         throw new Error(setupPayload?.error || 'Erreur lors de la configuration');
       }
 
+      setLoadingMessage('Initialisation des données...');
+
       if (setupPayload?.serviceDetails) {
         storageManager.writeJSON('serviceDetails', setupPayload.serviceDetails);
       }
 
       // 2. Lancer le seeding selon le type d'app
+      setLoadingMessage('Personnalisation de votre espace...');
       const seedResponse = await fetch('/api/seed/initialize', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -291,10 +296,15 @@ export default function OnboardingPage() {
               </button>
               <button 
                 type="submit" 
-                className="onboarding__submit"
+                className={`onboarding__submit ${isLoading ? 'onboarding__submit--loading' : ''}`}
                 disabled={isLoading}
               >
-                {isLoading ? 'Configuration en cours...' : 'Terminer la configuration'}
+                {isLoading ? (
+                  <>
+                    <span className="onboarding__spinner"></span>
+                    {loadingMessage}
+                  </>
+                ) : 'Terminer la configuration'}
               </button>
             </div>
           </form>

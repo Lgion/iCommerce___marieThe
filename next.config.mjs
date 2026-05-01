@@ -6,7 +6,7 @@ const __dirname = path.dirname(__filename);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // appDir est maintenant par défaut dans Next.js 15, plus besoin de l'experimental
+  serverExternalPackages: ['@libsql/client', '@prisma/adapter-libsql', 'libsql'],
   images: {
     remotePatterns: [
       {

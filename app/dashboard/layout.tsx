@@ -37,7 +37,7 @@ export default async function DashboardLayout({
             {/* Breadcrumbs seront ajoutés dynamiquement */}
           </div>
           <div className="dashboard-layout__header-actions">
-            <UserButton afterSignOutUrl="/" />
+            <UserButton />
           </div>
         </header>
 

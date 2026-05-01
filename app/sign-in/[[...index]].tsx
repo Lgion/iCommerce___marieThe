@@ -11,8 +11,8 @@ export default function Page() {
       minHeight: '100vh' 
     }}>
       <SignIn 
-        afterSignInUrl="/dashboard"
-        afterSignUpUrl="/onboarding"
+        fallbackRedirectUrl="/dashboard"
+        signUpFallbackRedirectUrl="/onboarding"
       />
     </div>
   );
